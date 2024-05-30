@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>bookstore</artifactId>
+	<artifactId>task-management-app</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bookstore</name>
-	<description>bookstore</description>
+	<name>task-management-app</name>
+	<description>Task management application</description>
 	<properties>
 		<java.version>21</java.version>
 		<maven.checkstyle.plugin.configLocation>checkstyle.xml</maven.checkstyle.plugin.configLocation>
@@ -128,8 +128,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.11.0</version>
 				<configuration>
-					<source>11</source>
-					<target>11</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
