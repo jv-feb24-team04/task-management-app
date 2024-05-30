@@ -5,9 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SoftDelete;
@@ -27,7 +25,4 @@ public class Label {
 
     @Column(nullable = false)
     private String color;
-
-    @ManyToMany(mappedBy = "labels")
-    private List<Task> taskIds;
 }
