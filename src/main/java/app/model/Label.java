@@ -30,9 +30,6 @@ public class Label {
     @Column(nullable = false)
     private String color;
 
-    @ManyToMany
-    @JoinTable(name = "tasks_labels",
-            joinColumns = @JoinColumn(name = "label_id"),
-            inverseJoinColumns = @JoinColumn(name = "task_id"))
+    @ManyToMany(mappedBy = "labels")
     private List<Task> taskIds;
 }
