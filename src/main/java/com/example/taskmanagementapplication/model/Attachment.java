@@ -13,9 +13,13 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Table(name = "attachments")
+@SQLDelete(sql = "UPDATE book SET is_deleted = 1 WHERE id = ?")
+@SQLRestriction("is_deleted = false")
 @Getter
 @Setter
 @ToString
@@ -33,4 +37,6 @@ public class Attachment {
     private String fileName;
     @Column(nullable = false)
     private LocalDateTime uploadDate;
+    @Column(nullable = false)
+    private boolean isDeleted;
 }
