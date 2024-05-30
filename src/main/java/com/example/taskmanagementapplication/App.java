@@ -1,4 +1,4 @@
-package app;
+package com.example.taskmanagementapplication;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
