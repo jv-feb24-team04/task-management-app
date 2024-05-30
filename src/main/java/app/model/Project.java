@@ -37,5 +37,5 @@ public class Project {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private Status status;
+    private ProjectStatus projectStatus;
 }

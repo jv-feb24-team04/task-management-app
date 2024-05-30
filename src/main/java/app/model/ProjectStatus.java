@@ -1,6 +1,6 @@
 package app.model;
 
-public enum Status {
+public enum ProjectStatus {
     INITIATED,
     IN_PROGRESS,
     COMPLETED

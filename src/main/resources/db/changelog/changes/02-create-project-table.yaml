@@ -33,7 +33,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: status
+                  name: project_status
                   type: ENUM('INITIATED','IN_PROGRESS','COMPLETED')
               - column:
                   name: is_deleted
