@@ -20,7 +20,7 @@ import org.hibernate.annotations.SoftDelete;
 public class Label {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Long id;
+    private Long id;
 
     @Column(nullable = false)
     private String name;
