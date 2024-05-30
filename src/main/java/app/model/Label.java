@@ -10,13 +10,15 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import java.util.List;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.SoftDelete;
 
 @Entity
 @Table(name = "labels")
 @SoftDelete(columnName = "is_deleted")
-@Data
+@Getter
+@Setter
 public class Label {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
