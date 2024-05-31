@@ -34,6 +34,6 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: projectStatus
-                  type: varchar(250)
+                  type: enum('NOT_STARTED', 'IN_PROGRESS', 'COMPLETED')
                   constraints:
                     nullable: false

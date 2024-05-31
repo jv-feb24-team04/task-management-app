@@ -1,4 +1,7 @@
 databaseChangeLog:
+  - changeSet:
+      author: vlasenko_yevhenii
+      id: master
   - include:
       file: db/changelog/changes/03-create-projects-table.yaml
   - include:
