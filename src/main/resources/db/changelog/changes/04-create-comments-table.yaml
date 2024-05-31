@@ -32,6 +32,11 @@ databaseChangeLog:
                   type: date
                   constraints:
                     nullable: false
+              - column:
+                  name: lastEdit
+                  type: date
+                  constraints:
+                    nullable: false
 
         - addForeignKeyConstraint:
             baseTableName: comments
