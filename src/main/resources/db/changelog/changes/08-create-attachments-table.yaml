@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 06-create-users-table
+      id: create-attachments-table.yaml
       author: vlasenko_yevhenii
       changes:
         - createTable:
-            tableName: users
+            tableName: attachments
             columns:
               - column:
                   name: id
@@ -13,29 +13,33 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
-                   name: email
-                   type: varchar(250)
-                   constraints:
-                     nullable: false
-                     unique: true
+                  name: task_id
+                  type: bigint
+                  constraints:
+                    nullable: false
               - column:
-                  name: password
+                  name: dropbox_file_id
                   type: varchar(250)
                   constraints:
                     nullable: false
               - column:
-                  name: first_name
+                  name: file_name
                   type: varchar(250)
                   constraints:
                     nullable: false
               - column:
-                  name: last_name
-                  type: varchar(250)
+                  name: upload_date
+                  type: timestamp
                   constraints:
                     nullable: false
               - column:
                   name: is_deleted
-                  type: boolean
-                  defaultValueBoolean: false
-                  constraints:
-                    nullable: false
+                  type: bit
+                  defaultValue: '0'
+
+        - addForeignKeyConstraint:
+            baseTableName: attachments
+            baseColumnNames: task_id
+            constraintName: fk_attachments_task
+            referencedTableName: tasks
+            referencedColumnNames: id
