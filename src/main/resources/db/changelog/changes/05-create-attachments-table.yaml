@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: 05-create-attachments-table.yaml
+      author: vlasenko_yevhenii
+      changes:
+        - createTable:
+            tableName: attachments
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: task_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: dropbox_file_id
+                  type: varchar(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: file_name
+                  type: varchar(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: upload_date
+                  type: date
+                  constraints:
+                    nullable: false
+
+        - addForeignKeyConstraint:
+            baseTableName: attachments
+            baseColumnNames: task_id
+            constraintName: fk_attachments_task
+            referencedTableName: tasks
+            referencedColumnNames: id
