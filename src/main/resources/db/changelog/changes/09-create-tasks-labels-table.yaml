@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 08-create-tasks-labels-table
+      id: create-tasks-labels-table
       author: vlasenko_yevhenii
       changes:
         - createTable:

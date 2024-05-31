@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 02-create-labels-table
+      id: create-labels-table
       author: valsenko_yevhenii
       changes:
         - createTable:
@@ -24,7 +24,5 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: is_deleted
-                  type: boolean
-                  defaultValueBoolean: false
-                  constraints:
-                    nullable: false
+                  type: bit
+                  defaultValue: '0'

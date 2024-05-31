@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 05-create-attachments-table.yaml
-      author: vlasenko_yevhenii
+      id: create-projects-table
+      author: admin
       changes:
         - createTable:
-            tableName: attachments
+            tableName: projects
             columns:
               - column:
                   name: id
@@ -13,29 +13,31 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
-                  name: task_id
-                  type: bigint
-                  constraints:
-                    nullable: false
-              - column:
-                  name: dropbox_file_id
+                  name: name
                   type: varchar(250)
                   constraints:
                     nullable: false
               - column:
-                  name: file_name
+                  name: description
                   type: varchar(250)
                   constraints:
                     nullable: false
               - column:
-                  name: upload_date
+                  name: start_date
                   type: date
                   constraints:
                     nullable: false
-
-        - addForeignKeyConstraint:
-            baseTableName: attachments
-            baseColumnNames: task_id
-            constraintName: fk_attachments_task
-            referencedTableName: tasks
-            referencedColumnNames: id
+              - column:
+                  name: end_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: project_status
+                  type: enum('NOT_STARTED', 'IN_PROGRESS', 'COMPLETED')
+                  constraints:
+                    nullable: false
+              - column:
+                  name: is_deleted
+                  type: bit
+                  defaultValue: '0'
