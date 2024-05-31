@@ -27,6 +27,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+    private static final String ERROR_KEY = "error";
+    private static final String TIMESTAMP_KEY = "timestamp";
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
             MethodArgumentNotValidException ex,
@@ -76,8 +79,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     private ResponseEntity<Object> getResponseEntity(HttpStatus status, Object error) {
         ProblemDetail problemDetail = ProblemDetail.forStatus(status);
         Map<String, Object> detail = new LinkedHashMap<>();
-        detail.put("error", error);
-        detail.put("timestamp", LocalDateTime.now().toString());
+        detail.put(ERROR_KEY, error);
+
+        detail.put(TIMESTAMP_KEY, LocalDateTime.now().toString());
         problemDetail.setProperties(detail);
         return ResponseEntity.of(problemDetail).build();
     }
