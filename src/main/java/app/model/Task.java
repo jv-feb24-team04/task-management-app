@@ -11,9 +11,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SoftDelete;
@@ -59,4 +61,7 @@ public class Task {
             inverseJoinColumns = @JoinColumn(name = "label_id")
     )
     private List<Label> labels;
+
+    @OneToMany(mappedBy = "task")
+    private Set<Comment> comments;
 }
