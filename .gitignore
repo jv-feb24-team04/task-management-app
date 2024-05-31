@@ -4,6 +4,8 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 liquibase.properties
+.env
+docker-compose.yml
 
 ### STS ###
 .apt_generated
@@ -20,6 +22,7 @@ liquibase.properties
 *.iml
 *.ipr
 application.properties
+
 
 ### NetBeans ###
 /nbproject/private/

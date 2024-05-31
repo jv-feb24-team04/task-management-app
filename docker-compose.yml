@@ -1,14 +1,15 @@
 services:
-  mysqldb:
-    restart: always
-    env_file: ./.env
-    image: mysql:8.0
+  mysql:
+    image: mysql:8
+    container_name: mysql_container
     environment:
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "3308:3306"
+      - ${MYSQL_DOCKER_PORT}:${MYSQL_LOCAL_PORT}
     volumes:
-      - db_data:/var/lib/mysql
+      - mysql_data:/var/lib/mysql
+volumes:
+  mysql_data:
