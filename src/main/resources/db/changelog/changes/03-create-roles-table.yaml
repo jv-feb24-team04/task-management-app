@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 07-create-roles-table
+      id: create-roles-table
       author: vlasenko_yevhenii
       changes:
         - createTable:
@@ -13,14 +13,12 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
-                  name: name
-                  type: varchar(255)
+                  name: role
+                  type: enum('USER', 'ADMIN')
                   constraints:
                     nullable: false
                     unique: true
               - column:
                   name: is_deleted
-                  type: boolean
-                  defaultValueBoolean: false
-                  constraints:
-                    nullable: false
+                  type: bit
+                  defaultValue: '0'
