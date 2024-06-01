@@ -1,6 +1,7 @@
-package app.mapper.comment;
+package app.mapper;
 
 import app.config.MapperConfig;
+import app.dto.comment.CommentRequestDto;
 import app.dto.comment.CommentResponseDto;
 import app.model.Comment;
 import org.mapstruct.Mapper;
@@ -11,4 +12,11 @@ public interface CommentMapper {
     @Mapping(target = "taskId", source = "task.id")
     @Mapping(target = "userId", source = "user.id")
     CommentResponseDto toDto(Comment comment);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "task", ignore = true)
+    @Mapping(target = "user", ignore = true)
+    @Mapping(target = "timeStamp", ignore = true)
+    @Mapping(target = "lastEdit", ignore = true)
+    Comment toEntity(CommentRequestDto requestDto);
 }

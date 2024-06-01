@@ -1,4 +1,4 @@
-package app.controller.comment;
+package app.controller;
 
 import app.dto.comment.CommentRequestDto;
 import app.dto.comment.CommentResponseDto;
@@ -10,7 +10,6 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,13 +23,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Comment management", description = "Endpoints for managing comments")
 @RestController
-@RequestMapping(value = "/api/comments")
+@RequestMapping("/api/comments")
 @RequiredArgsConstructor
 public class CommentController {
     private final CommentService commentService;
 
     @PostMapping
-    @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
             summary = "Add a new comment",
@@ -45,7 +43,6 @@ public class CommentController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.OK)
     @Operation(
             summary = "Retrieve comments by task ID",
@@ -59,7 +56,6 @@ public class CommentController {
     }
 
     @GetMapping("/user/{userId}")
-    @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.OK)
     @Operation(
             summary = "Retrieve comments by user ID",
@@ -73,7 +69,6 @@ public class CommentController {
     }
 
     @PutMapping("/{commentId}")
-    @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.OK)
     @Operation(
             summary = "Update a comment",
@@ -87,7 +82,6 @@ public class CommentController {
     }
 
     @DeleteMapping("/{commentId}")
-    @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(
             summary = "Delete a comment",

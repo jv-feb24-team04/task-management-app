@@ -3,7 +3,7 @@ package app.service.comment;
 import app.dto.comment.CommentRequestDto;
 import app.dto.comment.CommentResponseDto;
 import app.exception.EntityNotFoundException;
-import app.mapper.comment.CommentMapper;
+import app.mapper.CommentMapper;
 import app.model.Comment;
 import app.model.Task;
 import app.model.User;
@@ -30,21 +30,19 @@ public class CommentServiceImpl implements CommentService {
             Long userId,
             Long taskId
     ) {
-        Comment comment = new Comment();
-        comment.setText(commentRequestDto.getText());
-        comment.setTimeStamp(LocalDateTime.now());
-        comment.setLastEdit(LocalDateTime.now());
-
         User user = userRepository.findById(userId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Can not find user by id: " + userId));
-        comment.setUser(user);
 
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(
                         () -> new EntityNotFoundException("Can not find task by id: " + taskId));
-        comment.setTask(task);
 
+        Comment comment = commentMapper.toEntity(commentRequestDto);
+        comment.setUser(user);
+        comment.setTask(task);
+        comment.setTimeStamp(LocalDateTime.now());
+        comment.setLastEdit(LocalDateTime.now());
         return commentMapper.toDto(commentRepository.save(comment));
     }
 
@@ -66,10 +64,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentResponseDto update(Long commentId, CommentRequestDto commentRequestDto) {
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Can not find comment by id: " + commentId)
-                );
+        Comment comment = getCommentById(commentId);
 
         comment.setText(commentRequestDto.getText());
         comment.setLastEdit(LocalDateTime.now());
@@ -79,9 +74,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void delete(Long commentId) {
-        if (!commentRepository.existsById(commentId)) {
-            throw new EntityNotFoundException("Can not find comment by id: " + commentId);
-        }
-        commentRepository.deleteById(commentId);
+        Comment comment = getCommentById(commentId);
+        commentRepository.delete(comment);
+    }
+
+    private Comment getCommentById(Long commentId) {
+        return commentRepository.findById(commentId)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Cannot find comment by id: " + commentId)
+                );
     }
 }
