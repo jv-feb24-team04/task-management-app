@@ -50,10 +50,8 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public void delete(Long id) {
-        Optional<Label> optionalLabel = repository.findById(id);
-        if (optionalLabel.isEmpty()) {
-            throw new EntityNotFoundException("Failed to find entity by id=" + id);
-        }
-        repository.deleteById(id);
+        Label label = repository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Failed to find entity by id=" + id));
+        repository.delete(label);
     }
 }
