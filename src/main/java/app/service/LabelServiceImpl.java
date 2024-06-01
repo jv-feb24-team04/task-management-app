@@ -24,7 +24,7 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
-    public Set<LabelResponseDto> getAllLabelsForProject(Long projectId) {
+    public Set<LabelResponseDto> getAllForProject(Long projectId) {
         return mapper.toDtoSet(repository.findAllByProjectId(projectId));
     }
 
@@ -49,7 +49,11 @@ public class LabelServiceImpl implements LabelService {
     }
 
     @Override
-    public void deleteLabel(Long id) {
+    public void delete(Long id) {
+        Optional<Label> optionalLabel = repository.findById(id);
+        if (optionalLabel.isEmpty()) {
+            throw new EntityNotFoundException("Failed to find entity by id=" + id);
+        }
         repository.deleteById(id);
     }
 }

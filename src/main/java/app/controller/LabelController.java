@@ -22,11 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("api/labels")
-@Tag(name = "Label", description = "Labels management")
+@Tag(name = "Label", description = "Endpoints for managing labels")
 public class LabelController {
     private final LabelService labelService;
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Label creation", description = "Create and save a new label")
     public LabelResponseDto createLabel(@Valid @RequestBody LabelRequestDto dto) {
         return labelService.create(dto);
@@ -36,7 +37,7 @@ public class LabelController {
     @Operation(summary = "Get all labels by project id",
                 description = "Retrieve all labels related to the project")
     public Set<LabelResponseDto> getLabelsByProjectId(@PathVariable Long projectId) {
-        return labelService.getAllLabelsForProject(projectId);
+        return labelService.getAllForProject(projectId);
     }
 
     @PutMapping("/{id}")
@@ -50,6 +51,6 @@ public class LabelController {
     @Operation(summary = "label delete", description = "Delete the label entity by id")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLabel(@PathVariable Long id) {
-        labelService.deleteLabel(id);
+        labelService.delete(id);
     }
 }
