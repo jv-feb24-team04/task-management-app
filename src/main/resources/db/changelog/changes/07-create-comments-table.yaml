@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: 04-create-comments-table
+      id: create-comments-table
       author: vlasenko_yevhenii
       changes:
         - createTable:
@@ -28,8 +28,8 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: timestamp
-                  type: date
+                  name: time_stamp
+                  type: datetime
                   constraints:
                     nullable: false
               - column:

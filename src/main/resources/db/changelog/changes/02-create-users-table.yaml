@@ -1,10 +1,10 @@
 databaseChangeLog:
   - changeSet:
-      id: 0
-      author: admin
+      id: create-users-table
+      author: vlasenko_yevhenii
       changes:
         - createTable:
-            tableName: projects
+            tableName: users
             columns:
               - column:
                   name: id
@@ -13,27 +13,29 @@ databaseChangeLog:
                   constraints:
                     primaryKey: true
               - column:
-                  name: name
+                   name: email
+                   type: varchar(250)
+                   constraints:
+                     nullable: false
+                     unique: true
+              - column:
+                  name: password
                   type: varchar(250)
                   constraints:
                     nullable: false
               - column:
-                  name: description
+                  name: first_name
                   type: varchar(250)
                   constraints:
                     nullable: false
               - column:
-                  name: start_date
-                  type: date
+                  name: last_name
+                  type: varchar(250)
                   constraints:
                     nullable: false
               - column:
-                  name: end_date
-                  type: date
-                  constraints:
-                    nullable: false
-              - column:
-                  name: projectStatus
-                  type: enum('NOT_STARTED', 'IN_PROGRESS', 'COMPLETED')
+                  name: is_deleted
+                  type: boolean
+                  defaultValueBoolean: false
                   constraints:
                     nullable: false

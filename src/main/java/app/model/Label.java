@@ -5,14 +5,14 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.SoftDelete;
 
 @Entity
 @Table(name = "labels")
-@SoftDelete(columnName = "is_deleted")
 @Getter
 @Setter
 public class Label {
@@ -24,4 +24,7 @@ public class Label {
 
     @Column(nullable = false)
     private String color;
+
+    @ManyToMany(mappedBy = "labels")
+    private List<Task> tasks;
 }
