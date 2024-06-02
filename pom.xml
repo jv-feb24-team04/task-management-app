@@ -20,10 +20,8 @@
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<mapstruct-processor.version>1.5.5.Final</mapstruct-processor.version>
 		<mysql-connector-java.version>8.0.33</mysql-connector-java.version>
-		<springdoc.version>2.3.0</springdoc.version>
-        <org.telegram.version>6.9.7.1</org.telegram.version>
-        <commons-validator.version>1.9.0</commons-validator.version>
-    </properties>
+		<springdoc-openapi-starter-webmvc-ui.version>2.3.0</springdoc-openapi-starter-webmvc-ui.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -88,17 +86,17 @@
 		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-			<version>${springdoc.version}</version>
+			<version>${springdoc-openapi-starter-webmvc-ui.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.telegram</groupId>
 			<artifactId>telegrambots</artifactId>
-			<version>${org.telegram.version}</version>
+			<version>6.9.7.1</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-validator</groupId>
 			<artifactId>commons-validator</artifactId>
-			<version>${commons-validator.version}</version>
+			<version>1.9.0</version>
 		</dependency>
 	</dependencies>
 
