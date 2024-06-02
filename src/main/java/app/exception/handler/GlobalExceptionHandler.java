@@ -1,10 +1,12 @@
 package app.exception.handler;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.CONFLICT;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 import app.exception.EntityNotFoundException;
+import app.exception.NotUniqueValueException;
 import app.exception.RegistrationException;
 import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
@@ -60,6 +62,13 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
     protected ResponseEntity<Object> handleNotFound(EntityNotFoundException ex) {
         return getResponseEntity(NOT_FOUND, ex.getMessage());
+    }
+
+    @ExceptionHandler({
+            NotUniqueValueException.class,
+    })
+    public ResponseEntity<Object> handleCustomBadRequestException(NotUniqueValueException ex) {
+        return getResponseEntity(BAD_REQUEST, ex.getMessage());
     }
 
     @ExceptionHandler({Exception.class})
