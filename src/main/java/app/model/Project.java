@@ -7,8 +7,10 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.SoftDelete;
@@ -38,4 +40,7 @@ public class Project {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;
+
+    @OneToMany(mappedBy = "project")
+    private Set<Task> tasks;
 }

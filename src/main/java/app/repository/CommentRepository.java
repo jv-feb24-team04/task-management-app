@@ -1,4 +1,4 @@
-package app.repository.comment;
+package app.repository;
 
 import app.model.Comment;
 import java.util.List;

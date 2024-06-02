@@ -5,7 +5,9 @@ import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface LabelRepository extends JpaRepository<Label, Long> {
     @Query("SELECT l FROM Label l JOIN FETCH l.tasks t WHERE t.id = :taskId")
     Set<Label> findAllByTaskId(@Param("taskId") Long taskId);

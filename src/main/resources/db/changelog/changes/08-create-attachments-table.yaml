@@ -17,6 +17,8 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
+                    foreignKeyName: fk_attachments_task
+                    references: tasks(id)
               - column:
                   name: dropbox_file_id
                   type: varchar(250)
@@ -36,10 +38,3 @@ databaseChangeLog:
                   name: is_deleted
                   type: bit
                   defaultValue: '0'
-
-        - addForeignKeyConstraint:
-            baseTableName: attachments
-            baseColumnNames: task_id
-            constraintName: fk_attachments_task
-            referencedTableName: tasks
-            referencedColumnNames: id
