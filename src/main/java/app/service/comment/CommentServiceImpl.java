@@ -49,6 +49,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentResponseDto> getByUserId(Long userId, Pageable pageable) {
+        if (!userRepository.existsById(userId)) {
+            throw new EntityNotFoundException("Can not find user with ID: " + userId);
+        }
         return commentRepository.getAllByUserId(userId, pageable)
                 .stream()
                 .map(commentMapper::toDto)
@@ -57,6 +60,9 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentResponseDto> getByTaskId(Long taskId, Pageable pageable) {
+        if (!taskRepository.existsById(taskId)) {
+            throw new EntityNotFoundException("Can not find task with ID: " + taskId);
+        }
         return commentRepository.getAllByTaskId(taskId, pageable)
                 .stream()
                 .map(commentMapper::toDto)
