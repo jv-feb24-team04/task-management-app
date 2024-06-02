@@ -8,9 +8,7 @@ import com.dropbox.core.v2.files.GetTemporaryLinkResult;
 import com.dropbox.core.v2.files.WriteMode;
 import jakarta.annotation.PostConstruct;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import org.springframework.beans.factory.annotation.Value;
@@ -45,31 +43,12 @@ public class DropboxServiceImpl implements DropboxService {
     }
 
     @Override
-    public void createFolder(Long taskId) {
-        try {
-            client.files().createFolderV2("/folder" + taskId);
-        } catch (Exception e) {
-            throw new RuntimeException("Can't create folder for task: "
-                    + taskId);
-        }
-    }
-
-    @Override
     public String getFilePublicLink(String fileId) {
         try {
             GetTemporaryLinkResult result = client.files().getTemporaryLink(fileId);
             return result.getLink();
         } catch (Exception e) {
             throw new RuntimeException("Can't get link by id: " + fileId);
-        }
-    }
-
-    @Override
-    public void downloadFile(String path, String fileId) {
-        try (OutputStream outputStream = new FileOutputStream(path)) {
-            client.files().download(fileId).download(outputStream);
-        } catch (Exception e) {
-            throw new RuntimeException("Can't download file by id: " + fileId);
         }
     }
 

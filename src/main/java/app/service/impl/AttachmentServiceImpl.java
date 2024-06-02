@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -30,7 +31,6 @@ public class AttachmentServiceImpl implements AttachmentService {
         if (attachmentRepository.existsByTaskIdAndFileName(taskId, fileName)) {
             throw new NotUniqueValueException("File name must be unique");
         }
-        createFolderIfNotExists(taskId);
         Attachment attachment = saveNewAttachment(filePath, taskId);
         AttachmentResponseDto responseDto = attachmentMapper.toDto(attachment);
         responseDto.setFilePublicLink(getFilePublicLink(attachment.getDropboxFileId()));
@@ -46,12 +46,12 @@ public class AttachmentServiceImpl implements AttachmentService {
 
     @Override
     public List<AttachmentResponseDto> getAllByTaskId(Long taskId) {
-        if (!attachmentRepository.existsByTaskId(taskId)) {
-            throw new EntityNotFoundException("Can't find any attachment by task id: " + taskId);
+        if (attachmentRepository.existsByTaskId(taskId)) {
+            return attachmentRepository.findAllByTaskId(taskId).stream()
+                    .map(this::mapToDtoAndSetFileLink)
+                    .toList();
         }
-        return attachmentRepository.findAllByTaskId(taskId).stream()
-                .map(this::mapToDtoAndSetFileLink)
-                .toList();
+        throw new EntityNotFoundException("Can't find any attachment by task id: " + taskId);
     }
 
     @Override
@@ -62,6 +62,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
+    @Transactional
     public void deleteAllByTaskId(Long taskId) {
         dropboxService.deleteAllByTaskId(taskId);
         attachmentRepository.deleteAllByTaskId(taskId);
@@ -74,15 +75,6 @@ public class AttachmentServiceImpl implements AttachmentService {
     private String getFileName(String filePath) {
         Path path = Paths.get(filePath);
         return path.getFileName().toString();
-    }
-
-    private void createFolderIfNotExists(Long taskId) {
-        if (!taskRepository.existsById(taskId)) {
-            throw new EntityNotFoundException("Can't find task by id: " + taskId);
-        }
-        if (!attachmentRepository.existsByTaskId(taskId)) {
-            dropboxService.createFolder(taskId);
-        }
     }
 
     private String getDropBoxFileId(Long attachmentId) {
