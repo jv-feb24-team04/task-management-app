@@ -1,0 +1,47 @@
+package app.controller;
+
+import app.dto.UserResponseDto;
+import app.dto.UserUpdateInfoDto;
+import app.dto.UserUpdateRoleDto;
+import app.model.User;
+import app.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping(value = "/users")
+public class UserController {
+    private final UserService userService;
+    /*
+        PUT: /users/{id}/role - update user role
+        GET: /users/me - get my profile info
+        PUT/PATCH: /users/me - update profile info
+    */
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/{id}/role")
+    public void updateUserRole(@PathVariable Long id, @RequestBody UserUpdateRoleDto updateRoleDto) {
+        userService.updateUserRole(id, updateRoleDto);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @GetMapping("/me")
+    public UserResponseDto getUserInfo(@AuthenticationPrincipal User user) {
+        return userService.getUserInfo(user);
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PutMapping("/me")
+    public UserResponseDto updateUserInfo(@AuthenticationPrincipal User user, @RequestBody UserUpdateInfoDto updateInfoDto) {
+        return userService.updateUserInfo(user, updateInfoDto);
+    }
+}

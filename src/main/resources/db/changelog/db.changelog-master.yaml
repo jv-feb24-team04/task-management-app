@@ -20,3 +20,5 @@ databaseChangeLog:
       file: db/changelog/changes/05-create-attachments-table.yaml
   - include:
       file: db/changelog/changes/09-create-tasks-labels-table.yaml
+  - include:
+      file: db/changelog/changes/insert-roles.yaml
