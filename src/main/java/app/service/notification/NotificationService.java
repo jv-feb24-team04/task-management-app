@@ -1,4 +1,4 @@
-package app.service;
+package app.service.notification;
 
 import app.exception.TelegramBotProcessingException;
 import app.service.user.UserService;

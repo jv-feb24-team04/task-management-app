@@ -1,4 +1,4 @@
-package app.service;
+package app.service.dropbox;
 
 public interface DropboxService {
 

@@ -4,8 +4,11 @@ import app.config.MapperConfig;
 import app.dto.comment.CommentRequestDto;
 import app.dto.comment.CommentResponseDto;
 import app.model.Comment;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Named;
 
 @Mapper(config = MapperConfig.class)
 public interface CommentMapper {
