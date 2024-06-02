@@ -39,3 +39,8 @@ databaseChangeLog:
                   defaultValueBoolean: false
                   constraints:
                     nullable: false
+              - column:
+                  name: chat_id
+                  type: varchar(250)
+                  constraints:
+                    unique: true

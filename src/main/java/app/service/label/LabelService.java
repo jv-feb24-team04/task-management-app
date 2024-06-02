@@ -1,4 +1,4 @@
-package app.service;
+package app.service.label;
 
 import app.dto.LabelRequestDto;
 import app.dto.LabelResponseDto;
