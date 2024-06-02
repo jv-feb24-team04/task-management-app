@@ -17,11 +17,15 @@ databaseChangeLog:
                   type: bigint
                   constraints:
                     nullable: false
+                    foreignKeyName: fk_comments_task
+                    references: tasks(id)
               - column:
                   name: user_id
                   type: bigint
                   constraints:
                     nullable: false
+                    foreignKeyName: fk_comments_user
+                    references: users(id)
               - column:
                   name: text
                   type: varchar(250)
@@ -32,16 +36,8 @@ databaseChangeLog:
                   type: datetime
                   constraints:
                     nullable: false
-
-        - addForeignKeyConstraint:
-            baseTableName: comments
-            baseColumnNames: task_id
-            constraintName: fk_comments_task
-            referencedTableName: tasks
-            referencedColumnNames: id
-        - addForeignKeyConstraint:
-            baseTableName: comments
-            baseColumnNames: user_id
-            constraintName: fk_comments_user
-            referencedTableName: users
-            referencedColumnNames: id
+              - column:
+                  name: last_edit
+                  type: datetime
+                  constraints:
+                    nullable: false

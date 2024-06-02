@@ -1,4 +1,4 @@
-package app.dto;
+package app.dto.label;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
