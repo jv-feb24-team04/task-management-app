@@ -1,7 +1,7 @@
 package app.telegram;
 
 import app.repository.UserRepository;
-import app.service.UserService;
+import app.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.beans.factory.annotation.Value;

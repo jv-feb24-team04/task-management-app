@@ -1,4 +1,4 @@
-package app.service;
+package app.service.user;
 
 public interface UserService {
     boolean checkUserRegistered(String email);

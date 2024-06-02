@@ -1,4 +1,4 @@
-package app.service;
+package app.service.user;
 
 import app.model.User;
 import app.repository.UserRepository;
