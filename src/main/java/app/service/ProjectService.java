@@ -3,9 +3,8 @@ package app.service;
 import app.dto.ProjectRequestDto;
 import app.dto.ProjectResponseDto;
 import app.dto.ProjectStatusDto;
-import org.springframework.data.domain.Pageable;
-
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 public interface ProjectService {
     ProjectResponseDto saveProject(ProjectRequestDto projectDto);
