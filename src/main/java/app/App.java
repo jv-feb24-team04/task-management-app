@@ -1,5 +1,6 @@
 package app;
 
+import app.exception.TelegramBotInitializationException;
 import app.telegram.TelegramBot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
@@ -20,7 +21,7 @@ public class App {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(telegramBot);
         } catch (TelegramApiException e) {
-            e.printStackTrace();
+            throw new TelegramBotInitializationException("Failed to initialize Telegram Bot.", e);
         }
     }
 }

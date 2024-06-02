@@ -1,5 +1,6 @@
 package app.telegram;
 
+import app.exception.TelegramBotProcessingException;
 import app.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -83,7 +84,8 @@ public class TelegramBot extends TelegramLongPollingBot {
         try {
             execute(message);
         } catch (TelegramApiException e) {
-            throw new RuntimeException("Error sending message to chatId: " + chatId, e);
+            throw new TelegramBotProcessingException(
+                     "Error sending message to chatId: " + chatId, e);
         }
     }
 }
