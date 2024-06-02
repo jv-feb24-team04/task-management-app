@@ -38,4 +38,7 @@ public class Comment {
 
     @Column(nullable = false)
     private LocalDateTime timeStamp;
+
+    @Column(nullable = false)
+    private LocalDateTime lastEdit;
 }
