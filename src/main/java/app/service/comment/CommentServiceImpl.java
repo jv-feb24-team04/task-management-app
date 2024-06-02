@@ -43,6 +43,7 @@ public class CommentServiceImpl implements CommentService {
         comment.setTask(task);
         comment.setTimeStamp(LocalDateTime.now());
         comment.setLastEdit(LocalDateTime.now());
+
         return commentMapper.toDto(commentRepository.save(comment));
     }
 
