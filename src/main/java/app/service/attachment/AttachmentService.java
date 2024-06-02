@@ -1,4 +1,4 @@
-package app.service;
+package app.service.attachment;
 
 import app.dto.attachment.AttachmentResponseDto;
 import java.util.List;

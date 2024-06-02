@@ -1,4 +1,4 @@
-package app.service.impl;
+package app.service.attachment;
 
 import app.dto.attachment.AttachmentResponseDto;
 import app.exception.EntityNotFoundException;
@@ -7,8 +7,7 @@ import app.mapper.AttachmentMapper;
 import app.model.Attachment;
 import app.repository.AttachmentRepository;
 import app.repository.TaskRepository;
-import app.service.AttachmentService;
-import app.service.DropboxService;
+import app.service.dropbox.DropboxService;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;

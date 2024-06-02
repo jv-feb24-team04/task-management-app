@@ -1,7 +1,7 @@
 package app;
 
 import app.exception.TelegramBotInitializationException;
-import app.service.NotificationService;
+import app.service.notification.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,7 +1,7 @@
 package app.service.label;
 
-import app.dto.LabelRequestDto;
-import app.dto.LabelResponseDto;
+import app.dto.label.LabelRequestDto;
+import app.dto.label.LabelResponseDto;
 import app.exception.EntityNotFoundException;
 import app.mapper.LabelMapper;
 import app.model.Label;

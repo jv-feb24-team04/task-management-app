@@ -1,7 +1,7 @@
 package app.controller;
 
 import app.dto.attachment.AttachmentResponseDto;
-import app.service.AttachmentService;
+import app.service.attachment.AttachmentService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

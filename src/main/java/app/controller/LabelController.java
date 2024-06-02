@@ -1,7 +1,7 @@
 package app.controller;
 
-import app.dto.LabelRequestDto;
-import app.dto.LabelResponseDto;
+import app.dto.label.LabelRequestDto;
+import app.dto.label.LabelResponseDto;
 import app.service.label.LabelService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

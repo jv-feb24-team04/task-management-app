@@ -1,7 +1,7 @@
 package app.service.label;
 
-import app.dto.LabelRequestDto;
-import app.dto.LabelResponseDto;
+import app.dto.label.LabelRequestDto;
+import app.dto.label.LabelResponseDto;
 import java.util.Set;
 
 public interface LabelService {
