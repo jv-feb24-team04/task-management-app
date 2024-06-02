@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class ValidatorConfig {
-
     @Bean
     public EmailValidator emailValidator() {
         return EmailValidator.getInstance();
