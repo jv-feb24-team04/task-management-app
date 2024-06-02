@@ -52,7 +52,7 @@ public class CommentController {
             @RequestParam Long taskId,
             Pageable pageable
     ) {
-        return commentService.findByTaskId(taskId, pageable);
+        return commentService.getByTaskId(taskId, pageable);
     }
 
     @GetMapping("/user/{userId}")
@@ -65,7 +65,7 @@ public class CommentController {
             @PathVariable Long userId,
             Pageable pageable
     ) {
-        return commentService.findByUserId(userId, pageable);
+        return commentService.getByUserId(userId, pageable);
     }
 
     @PutMapping("/{commentId}")

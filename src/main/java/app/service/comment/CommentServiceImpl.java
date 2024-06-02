@@ -48,16 +48,16 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentResponseDto> findByUserId(Long userId, Pageable pageable) {
-        return commentRepository.findAllByUserId(userId, pageable)
+    public List<CommentResponseDto> getByUserId(Long userId, Pageable pageable) {
+        return commentRepository.getAllByUserId(userId, pageable)
                 .stream()
                 .map(commentMapper::toDto)
                 .toList();
     }
 
     @Override
-    public List<CommentResponseDto> findByTaskId(Long taskId, Pageable pageable) {
-        return commentRepository.findAllByTaskId(taskId, pageable)
+    public List<CommentResponseDto> getByTaskId(Long taskId, Pageable pageable) {
+        return commentRepository.getAllByTaskId(taskId, pageable)
                 .stream()
                 .map(commentMapper::toDto)
                 .toList();

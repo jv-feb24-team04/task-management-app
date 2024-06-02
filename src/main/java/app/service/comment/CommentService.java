@@ -8,9 +8,9 @@ import org.springframework.data.domain.Pageable;
 public interface CommentService {
     CommentResponseDto save(CommentRequestDto commentRequestDto, Long userId, Long taskId);
 
-    List<CommentResponseDto> findByUserId(Long userId, Pageable pageable);
+    List<CommentResponseDto> getByUserId(Long userId, Pageable pageable);
 
-    List<CommentResponseDto> findByTaskId(Long taskId, Pageable pageable);
+    List<CommentResponseDto> getByTaskId(Long taskId, Pageable pageable);
 
     CommentResponseDto update(Long commentId, CommentRequestDto commentRequestDto);
 
