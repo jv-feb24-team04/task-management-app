@@ -89,7 +89,12 @@
 			<version>${springdoc-openapi-starter-webmvc-ui.version}</version>
 		</dependency>
 		<dependency>
-			<groupId>org.telegram</groupId>
+			<groupId>com.dropbox.core</groupId>
+			<artifactId>dropbox-core-sdk</artifactId>
+			<version>7.0.0</version>
+		</dependency>
+		<dependency>
+		<groupId>org.telegram</groupId>
 			<artifactId>telegrambots</artifactId>
 			<version>6.9.7.1</version>
 		</dependency>
