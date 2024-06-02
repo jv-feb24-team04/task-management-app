@@ -1,6 +1,5 @@
 package app.telegram;
 
-import app.repository.UserRepository;
 import app.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -16,7 +15,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class TelegramBot extends TelegramLongPollingBot {
     private final UserService userService;
     private final EmailValidator validator;
-    private final UserRepository userRepository;
 
     @Value("${telegram.bot.username}")
     private String botUsername;
