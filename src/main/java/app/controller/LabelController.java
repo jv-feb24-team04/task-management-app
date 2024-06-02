@@ -2,7 +2,7 @@ package app.controller;
 
 import app.dto.LabelRequestDto;
 import app.dto.LabelResponseDto;
-import app.service.LabelService;
+import app.service.label.LabelService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

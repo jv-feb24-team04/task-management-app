@@ -50,6 +50,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private boolean isDeleted = false;
 
+    @Column(unique = true)
+    private String chatId;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "users_roles",
