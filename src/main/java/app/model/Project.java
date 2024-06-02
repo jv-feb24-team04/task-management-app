@@ -1,5 +1,6 @@
 package app.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -39,7 +40,7 @@ public class Project {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private ProjectStatus projectStatus = ProjectStatus.INITIATED;
+    private ProjectStatus projectStatus;
 
     @OneToMany(mappedBy = "project")
     private Set<Task> tasks;
