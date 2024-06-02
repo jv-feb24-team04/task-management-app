@@ -39,7 +39,7 @@ public class Project {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private ProjectStatus projectStatus;
+    private ProjectStatus projectStatus = ProjectStatus.INITIATED;
 
     @OneToMany(mappedBy = "project")
     private Set<Task> tasks;
