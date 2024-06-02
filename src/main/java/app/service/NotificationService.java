@@ -1,4 +1,4 @@
-package app.telegram;
+package app.service;
 
 import app.exception.TelegramBotProcessingException;
 import app.service.user.UserService;
@@ -13,7 +13,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 @Component
 @RequiredArgsConstructor
-public class TelegramBot extends TelegramLongPollingBot {
+public class NotificationService extends TelegramLongPollingBot {
     private final UserService userService;
     private final EmailValidator validator;
 

@@ -1,7 +1,7 @@
 package app;
 
 import app.exception.TelegramBotInitializationException;
-import app.telegram.TelegramBot;
+import app.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,7 +15,7 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 public class App {
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(App.class, args);
-        TelegramBot telegramBot = context.getBean(TelegramBot.class);
+        NotificationService telegramBot = context.getBean(NotificationService.class);
 
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
