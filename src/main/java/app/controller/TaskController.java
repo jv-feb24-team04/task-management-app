@@ -3,6 +3,7 @@ package app.controller;
 import app.dto.task.CreateTaskRequestDto;
 import app.dto.task.TaskDtoWithoutLabelsAndComments;
 import app.dto.task.TaskResponseDto;
+import app.dto.task.UpdateTaskRequestDto;
 import app.service.task.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -62,9 +63,9 @@ public class TaskController {
             description = "Update all information about the task by ID")
     public TaskResponseDto updateTask(
             @PathVariable Long id,
-            @RequestBody @Valid CreateTaskRequestDto requestDto) {
+            @RequestBody @Valid UpdateTaskRequestDto requestDto) {
 
-        return taskService.updateStatus(id, requestDto);
+        return taskService.updateTask(id, requestDto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

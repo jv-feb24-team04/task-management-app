@@ -4,6 +4,8 @@ import app.config.MapperConfig;
 import app.dto.comment.CommentRequestDto;
 import app.dto.comment.CommentResponseDto;
 import app.model.Comment;
+import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.mapstruct.Mapper;
@@ -25,7 +27,7 @@ public interface CommentMapper {
   
     @Named("setComments")
     default Set<CommentResponseDto> setComments(Set<Comment> comments) {
-        return comments.stream()
+        return Optional.ofNullable(comments).orElse(Collections.emptySet()).stream()
                 .map(this::toDto)
                 .collect(Collectors.toSet());
     }

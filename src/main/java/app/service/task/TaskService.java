@@ -3,6 +3,7 @@ package app.service.task;
 import app.dto.task.CreateTaskRequestDto;
 import app.dto.task.TaskDtoWithoutLabelsAndComments;
 import app.dto.task.TaskResponseDto;
+import app.dto.task.UpdateTaskRequestDto;
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 
@@ -13,7 +14,7 @@ public interface TaskService {
 
     TaskResponseDto getById(Long id);
 
-    TaskResponseDto updateStatus(Long id, CreateTaskRequestDto requestDto);
+    TaskResponseDto updateTask(Long id, UpdateTaskRequestDto requestDto);
 
     void delete(Long id);
 }
