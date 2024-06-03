@@ -4,6 +4,7 @@ import app.dto.user.UserRequestDto;
 import app.dto.user.UserResponseDto;
 import app.dto.user.UserUpdateInfoDto;
 import app.dto.user.UserUpdateRoleDto;
+import app.exception.EntityNotFoundException;
 import app.exception.RegistrationException;
 import app.mapper.UserMapper;
 import app.model.Role;
@@ -90,5 +91,13 @@ public class UserServiceImpl implements UserService {
 
         User savedUser = userRepository.save(user);
         return userMapper.toDto(savedUser);
+    }
+
+    public String getUserChatId(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            return optionalUser.get().getChatId();
+        }
+        throw new EntityNotFoundException("Failed to get user by id=" + id);
     }
 }

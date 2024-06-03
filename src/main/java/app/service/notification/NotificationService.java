@@ -19,7 +19,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class NotificationService extends TelegramLongPollingBot {
     private final UserService userService;
     private final EmailValidator validator;
-    private final UserRepository userRepository;
 
     @Value("${telegram.bot.username}")
     private String botUsername;
@@ -29,6 +28,10 @@ public class NotificationService extends TelegramLongPollingBot {
     private String restrictionMessage;
     @Value("${telegram.bot.message.success}")
     private String successMessage;
+    @Value("${telegram.bot.message.createMessage}")
+    private String createMessage;
+    @Value("${telegram.bot.message.updateMessage}")
+    private String updateMessage;
 
     @Override
     public String getBotUsername() {
@@ -57,16 +60,30 @@ public class NotificationService extends TelegramLongPollingBot {
     }
 
     public void notifyAssigneeOnTaskCreate(@NotNull Task task) {
-        String chatId = task.getAssignee().getChatId();
-        sendMessage(userRepository.findById(task.getId()).get().getChatId(), "created");
+        sendMessage(userService.getUserChatId(task.getAssignee().getId()),
+                createMessage
+                        + System.lineSeparator()
+                        + task.getName()
+                        + System.lineSeparator()
+                        + task.getDescription()
+                        + System.lineSeparator()
+                        + task.getPriority()
+                        + System.lineSeparator()
+                        + task.getDueDate()
+        );
     }
 
     public void notifyAssigneeOnTaskUpdate(@NotNull Task task) {
 
-        String chatId = String.valueOf(task.getAssignee().getChatId());
-        sendMessage(userRepository.findById(task.getAssignee().getId())
-                .get()
-                .getChatId(), "updated");
+        sendMessage(userService.getUserChatId(task.getAssignee().getId()),
+                updateMessage
+                        + System.lineSeparator()
+                        + task.getName()
+                        + System.lineSeparator()
+                        + task.getStatus()
+                        + System.lineSeparator()
+                        + task.getPriority()
+        );
     }
 
 
@@ -103,7 +120,7 @@ public class NotificationService extends TelegramLongPollingBot {
             execute(message);
         } catch (TelegramApiException e) {
             throw new TelegramBotProcessingException(
-                     "Error sending message to chatId: " + chatId, e);
+                    "Error sending message to chatId: " + chatId, e);
         }
     }
 }

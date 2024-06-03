@@ -19,4 +19,6 @@ public interface UserService {
     UserResponseDto updateUserInfo(User user, UserUpdateInfoDto updateInfoDto);
 
     UserResponseDto registerUser(UserRequestDto userRequestDto) throws RegistrationException;
+
+    public String getUserChatId(Long id);
 }
