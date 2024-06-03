@@ -2,7 +2,6 @@ package app.service.notification;
 
 import app.exception.TelegramBotProcessingException;
 import app.model.Task;
-import app.repository.UserRepository;
 import app.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -85,7 +84,6 @@ public class NotificationService extends TelegramLongPollingBot {
                         + task.getPriority()
         );
     }
-
 
     private void handleStartCommand(String chatId) {
         sendMessage(chatId, "Please enter your email:");
