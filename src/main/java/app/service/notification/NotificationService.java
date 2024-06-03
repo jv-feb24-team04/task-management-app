@@ -1,9 +1,12 @@
 package app.service.notification;
 
 import app.exception.TelegramBotProcessingException;
+import app.model.Task;
+import app.repository.UserRepository;
 import app.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -16,6 +19,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 public class NotificationService extends TelegramLongPollingBot {
     private final UserService userService;
     private final EmailValidator validator;
+    private final UserRepository userRepository;
 
     @Value("${telegram.bot.username}")
     private String botUsername;
@@ -51,6 +55,20 @@ public class NotificationService extends TelegramLongPollingBot {
             }
         }
     }
+
+    public void notifyAssigneeOnTaskCreate(@NotNull Task task) {
+        String chatId = task.getAssignee().getChatId();
+        sendMessage(userRepository.findById(task.getId()).get().getChatId(), "created");
+    }
+
+    public void notifyAssigneeOnTaskUpdate(@NotNull Task task) {
+
+        String chatId = String.valueOf(task.getAssignee().getChatId());
+        sendMessage(userRepository.findById(task.getAssignee().getId())
+                .get()
+                .getChatId(), "updated");
+    }
+
 
     private void handleStartCommand(String chatId) {
         sendMessage(chatId, "Please enter your email:");
