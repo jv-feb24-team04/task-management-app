@@ -9,7 +9,7 @@ import app.mapper.UserMapper;
 import app.model.Role;
 import app.model.User;
 import app.repository.RoleRepository;
-import app.repository.user.UserRepository;
+import app.repository.UserRepository;
 import java.util.Collections;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
