@@ -1,12 +1,13 @@
-package app.service;
+package app.service.project.impl;
 
-import app.dto.ProjectRequestDto;
-import app.dto.ProjectResponseDto;
-import app.dto.ProjectStatusDto;
+import app.dto.project.ProjectRequestDto;
+import app.dto.project.ProjectResponseDto;
+import app.dto.project.ProjectStatusDto;
 import app.exception.EntityNotFoundException;
 import app.mapper.ProjectMapper;
 import app.model.Project;
 import app.repository.ProjectRepository;
+import app.service.project.ProjectService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;

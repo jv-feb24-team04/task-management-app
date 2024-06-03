@@ -1,8 +1,8 @@
 package app.mapper;
 
 import app.config.MapperConfig;
-import app.dto.ProjectRequestDto;
-import app.dto.ProjectResponseDto;
+import app.dto.project.ProjectRequestDto;
+import app.dto.project.ProjectResponseDto;
 import app.model.Project;
 import app.model.ProjectStatus;
 import org.mapstruct.Mapper;

@@ -1,9 +1,9 @@
 package app.controller;
 
-import app.dto.ProjectRequestDto;
-import app.dto.ProjectResponseDto;
-import app.dto.ProjectStatusDto;
-import app.service.ProjectService;
+import app.dto.project.ProjectRequestDto;
+import app.dto.project.ProjectResponseDto;
+import app.dto.project.ProjectStatusDto;
+import app.service.project.ProjectService;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

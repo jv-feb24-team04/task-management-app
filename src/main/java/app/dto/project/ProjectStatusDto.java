@@ -1,4 +1,4 @@
-package app.dto;
+package app.dto.project;
 
 import app.model.ProjectStatus;
 import com.fasterxml.jackson.annotation.JsonProperty;
