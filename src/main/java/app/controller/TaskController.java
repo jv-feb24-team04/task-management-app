@@ -1,7 +1,6 @@
 package app.controller;
 
 import app.dto.task.CreateTaskRequestDto;
-import app.dto.task.TaskDtoWithoutLabelsAndComments;
 import app.dto.task.TaskResponseDto;
 import app.dto.task.UpdateTaskRequestDto;
 import app.service.task.TaskService;
@@ -34,7 +33,7 @@ public class TaskController {
     @PostMapping
     @Operation(summary = "Create a new task",
             description = "Create a new task for a project with project ID")
-    public TaskDtoWithoutLabelsAndComments createTask(
+    public TaskResponseDto createTask(
             @RequestParam Long projectId,
             @RequestBody @Valid CreateTaskRequestDto requestDto) {
 

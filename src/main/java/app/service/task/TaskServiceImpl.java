@@ -1,7 +1,6 @@
 package app.service.task;
 
 import app.dto.task.CreateTaskRequestDto;
-import app.dto.task.TaskDtoWithoutLabelsAndComments;
 import app.dto.task.TaskResponseDto;
 import app.dto.task.UpdateTaskRequestDto;
 import app.exception.EntityNotFoundException;
@@ -27,7 +26,7 @@ public class TaskServiceImpl implements TaskService {
     private final CommentService commentService;
 
     @Override
-    public TaskDtoWithoutLabelsAndComments save(CreateTaskRequestDto requestDto, Long projectId) {
+    public TaskResponseDto save(CreateTaskRequestDto requestDto, Long projectId) {
         Project project = getProjectById(projectId);
         Task task = taskMapper.toModelCreate(requestDto);
         task.setProject(project);
@@ -36,7 +35,7 @@ public class TaskServiceImpl implements TaskService {
         task.setComments(Set.of());
         project.getTasks().add(task);
 
-        return taskMapper.toDtoWithoutLabelsAndComments(taskRepository.save(task));
+        return taskMapper.toDto(taskRepository.save(task));
     }
 
     @Override
