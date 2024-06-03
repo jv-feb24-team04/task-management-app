@@ -11,9 +11,9 @@ public interface TaskService {
 
     List<TaskResponseDto> getAllByProjectId(Long projectId, Pageable pageable);
 
-    TaskResponseDto getById(Long projectId, Long id);
+    TaskResponseDto getById(Long id);
 
-    TaskResponseDto updateStatus(Long projectId, Long id, CreateTaskRequestDto requestDto);
+    TaskResponseDto updateStatus(Long id, CreateTaskRequestDto requestDto);
 
-    void delete(Long projectId, Long id);
+    void delete(Long id);
 }

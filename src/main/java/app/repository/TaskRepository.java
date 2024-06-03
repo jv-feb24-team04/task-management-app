@@ -14,5 +14,5 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
     List<Task> findAllByProjectId(Long projectId, Pageable pageable);
 
     @EntityGraph(attributePaths = {"labels", "comments"})
-    Optional<Task> findByIdAndProjectId(Long id, Long projectId);
+    Optional<Task> findById(Long id);
 }

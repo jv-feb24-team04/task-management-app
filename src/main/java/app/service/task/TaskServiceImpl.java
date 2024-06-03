@@ -48,14 +48,14 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResponseDto getById(Long projectId, Long id) {
-        Task task = getTask(projectId, id);
+    public TaskResponseDto getById(Long id) {
+        Task task = getTask(id);
         return taskMapper.toDto(task);
     }
 
     @Override
-    public TaskResponseDto updateStatus(Long projectId, Long id, CreateTaskRequestDto requestDto) {
-        if (taskRepository.findByIdAndProjectId(id, projectId).isPresent()) {
+    public TaskResponseDto updateStatus(Long id, CreateTaskRequestDto requestDto) {
+        if (taskRepository.findById(id).isPresent()) {
             Task task = taskMapper.toModel(requestDto);
             task.setId(id);
             return taskMapper.toDto(taskRepository.save(task));
@@ -64,15 +64,15 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void delete(Long projectId, Long id) {
-        Task task = getTask(projectId, id);
+    public void delete(Long id) {
+        Task task = getTask(id);
         task.getComments().forEach(comment -> commentService.delete(comment.getId()));
         taskRepository.delete(task);
     }
 
-    private Task getTask(Long projectId, Long id) {
+    private Task getTask(Long id) {
         return taskRepository
-                .findByIdAndProjectId(id, projectId)
+                .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find task with id " + id));
     }
 

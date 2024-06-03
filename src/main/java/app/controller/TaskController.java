@@ -53,26 +53,25 @@ public class TaskController {
     @GetMapping("/{id}")
     @Operation(summary = "Get task by ID",
             description = "Get all information about the task by ID")
-    public TaskResponseDto getTaskById(@RequestParam Long projectId, @PathVariable Long id) {
-        return taskService.getById(projectId, id);
+    public TaskResponseDto getTaskById(@PathVariable Long id) {
+        return taskService.getById(id);
     }
 
     @PutMapping("/{id}")
     @Operation(summary = "Update task by ID",
             description = "Update all information about the task by ID")
     public TaskResponseDto updateTask(
-            @RequestParam Long projectId,
             @PathVariable Long id,
             @RequestBody @Valid CreateTaskRequestDto requestDto) {
 
-        return taskService.updateStatus(projectId, id, requestDto);
+        return taskService.updateStatus(id, requestDto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a task by ID",
             description = "Delete a task by ID, if there is one")
-    public void deleteTask(@RequestParam Long projectId, @PathVariable Long id) {
-        taskService.delete(projectId, id);
+    public void deleteTask(@PathVariable Long id) {
+        taskService.delete(id);
     }
 }
