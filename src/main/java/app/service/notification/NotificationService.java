@@ -1,6 +1,8 @@
 package app.service.notification;
 
 import app.exception.TelegramBotProcessingException;
+import app.model.Task;
+import app.model.User;
 import app.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
@@ -25,6 +27,10 @@ public class NotificationService extends TelegramLongPollingBot {
     private String restrictionMessage;
     @Value("${telegram.bot.message.success}")
     private String successMessage;
+    @Value("${telegram.bot.message.updateTaskMessage}")
+    private String updateMessage;
+    @Value("${telegram.bot.message.newTaskMessage}")
+    private String newTaskMessage;
 
     @Override
     public String getBotUsername() {
@@ -50,6 +56,23 @@ public class NotificationService extends TelegramLongPollingBot {
                 sendRestrictionMessage(chatId);
             }
         }
+    }
+
+    public void notifyAssigneeOnTaskUpdate(Long userId, Task task) {
+        User user = userService.getById(userId);
+        String messageText = updateMessage
+                    + task.getPriority()
+                    + System.lineSeparator()
+                    + task.getStatus()
+                    + System.lineSeparator()
+                    + task.getDueDate();
+
+        sendMessage(user.getChatId(), messageText);
+    }
+
+    public void notifyAssigneeOnTaskCreation(String chatId, Task task) {
+        String message = String.format(newTaskMessage, task.getAssignee().getFirstName());
+        sendMessage(chatId, message);
     }
 
     private void handleStartCommand(String chatId) {

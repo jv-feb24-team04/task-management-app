@@ -65,7 +65,7 @@ public class TaskController {
             @PathVariable Long id,
             @RequestBody @Valid CreateTaskRequestDto requestDto) {
 
-        return taskService.updateStatus(projectId, id, requestDto);
+        return taskService.update(projectId, id, requestDto);
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

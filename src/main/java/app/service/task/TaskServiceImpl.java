@@ -10,6 +10,7 @@ import app.model.Task;
 import app.repository.ProjectRepository;
 import app.repository.TaskRepository;
 import app.service.comment.CommentService;
+import app.service.notification.NotificationService;
 import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,7 @@ public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
     private final ProjectRepository projectRepository;
     private final CommentService commentService;
+    private final NotificationService notificationService;
 
     @Override
     public TaskDtoWithoutLabelsAndComments save(CreateTaskRequestDto requestDto, Long projectId) {
@@ -33,7 +35,10 @@ public class TaskServiceImpl implements TaskService {
         task.setLabels(List.of());
         project.getTasks().add(task);
 
-        return taskMapper.toDtoWithoutLabelsAndComments(taskRepository.save(task));
+        TaskDtoWithoutLabelsAndComments dto = taskMapper.toDtoWithoutLabelsAndComments(
+                                                                    taskRepository.save(task));
+        notificationService.notifyAssigneeOnTaskCreation(task.getAssignee().getChatId(), task);
+        return dto;
     }
 
     @Override
@@ -55,11 +60,13 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResponseDto updateStatus(Long projectId, Long id, CreateTaskRequestDto requestDto) {
+    public TaskResponseDto update(Long projectId, Long id, CreateTaskRequestDto requestDto) {
         if (taskRepository.findByIdAndProjectId(id, projectId).isPresent()) {
             Task task = taskMapper.toModel(requestDto);
             task.setId(id);
-            return taskMapper.toDto(taskRepository.save(task));
+            TaskResponseDto responseDto = taskMapper.toDto(taskRepository.save(task));
+            notificationService.notifyAssigneeOnTaskUpdate(task.getAssignee().getId(),task);
+            return responseDto;
         }
         throw new EntityNotFoundException("Can't find task with id " + id);
     }

@@ -1,5 +1,6 @@
 package app.service.user;
 
+import app.exception.EntityNotFoundException;
 import app.model.User;
 import app.repository.UserRepository;
 import java.util.Optional;
@@ -24,5 +25,12 @@ public class UserServiceImpl implements UserService {
             user.setChatId(chatId);
             userRepository.save(user);
         }
+    }
+
+    @Override
+    public User getById(Long id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Failed to find user by id=" + id)
+        );
     }
 }

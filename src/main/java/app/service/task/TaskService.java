@@ -13,7 +13,7 @@ public interface TaskService {
 
     TaskResponseDto getById(Long projectId, Long id);
 
-    TaskResponseDto updateStatus(Long projectId, Long id, CreateTaskRequestDto requestDto);
+    TaskResponseDto update(Long projectId, Long id, CreateTaskRequestDto requestDto);
 
     void delete(Long projectId, Long id);
 }
