@@ -1,9 +1,11 @@
 package app.service.notification;
 
 import app.exception.TelegramBotProcessingException;
+import app.model.Task;
 import app.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.validator.routines.EmailValidator;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -25,6 +27,10 @@ public class NotificationService extends TelegramLongPollingBot {
     private String restrictionMessage;
     @Value("${telegram.bot.message.success}")
     private String successMessage;
+    @Value("${telegram.bot.message.createMessage}")
+    private String createMessage;
+    @Value("${telegram.bot.message.updateMessage}")
+    private String updateMessage;
 
     @Override
     public String getBotUsername() {
@@ -50,6 +56,33 @@ public class NotificationService extends TelegramLongPollingBot {
                 sendRestrictionMessage(chatId);
             }
         }
+    }
+
+    public void notifyAssigneeOnTaskCreate(@NotNull Task task) {
+        sendMessage(userService.getUserChatId(task.getAssignee().getId()),
+                createMessage
+                        + System.lineSeparator()
+                        + task.getName()
+                        + System.lineSeparator()
+                        + task.getDescription()
+                        + System.lineSeparator()
+                        + task.getPriority()
+                        + System.lineSeparator()
+                        + task.getDueDate()
+        );
+    }
+
+    public void notifyAssigneeOnTaskUpdate(@NotNull Task task) {
+
+        sendMessage(userService.getUserChatId(task.getAssignee().getId()),
+                updateMessage
+                        + System.lineSeparator()
+                        + task.getName()
+                        + System.lineSeparator()
+                        + task.getStatus()
+                        + System.lineSeparator()
+                        + task.getPriority()
+        );
     }
 
     private void handleStartCommand(String chatId) {
@@ -85,7 +118,7 @@ public class NotificationService extends TelegramLongPollingBot {
             execute(message);
         } catch (TelegramApiException e) {
             throw new TelegramBotProcessingException(
-                     "Error sending message to chatId: " + chatId, e);
+                    "Error sending message to chatId: " + chatId, e);
         }
     }
 }
