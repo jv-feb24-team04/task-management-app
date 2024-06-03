@@ -1,6 +1,6 @@
 services:
   mysqldb:
-    restart: always
+    restart: on-failure
     env_file: ./.env
     image: mysql:8.0
     environment:
