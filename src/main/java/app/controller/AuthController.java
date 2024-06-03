@@ -6,7 +6,7 @@ import app.dto.UserRequestDto;
 import app.dto.UserResponseDto;
 import app.exception.RegistrationException;
 import app.security.AuthenticationService;
-import app.service.UserService;
+import app.service.user.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

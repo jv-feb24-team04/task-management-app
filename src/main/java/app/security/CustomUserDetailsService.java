@@ -1,6 +1,6 @@
 package app.security;
 
-import app.repository.UserRepository;
+import app.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -15,7 +15,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email)
             throws UsernameNotFoundException {
-        return userRepository.findByEmail(email)
+        return userRepository.findUserByEmail(email)
                         .orElseThrow(() ->
                                 new UsernameNotFoundException("Can't find user by email"
                                         + email));
