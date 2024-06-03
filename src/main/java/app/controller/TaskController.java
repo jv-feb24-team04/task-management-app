@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +18,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Task management", description = "Endpoints for managing tasks")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/projects/{projectId}/tasks")
+@RequestMapping("/api/tasks")
 public class TaskController {
     private final TaskService taskService;
 
@@ -32,7 +34,7 @@ public class TaskController {
     @Operation(summary = "Create a new task",
             description = "Create a new task for a project with project ID")
     public TaskDtoWithoutLabelsAndComments createTask(
-            @PathVariable Long projectId,
+            @RequestParam Long projectId,
             @RequestBody @Valid CreateTaskRequestDto requestDto) {
 
         return taskService.save(requestDto, projectId);
@@ -41,14 +43,17 @@ public class TaskController {
     @GetMapping
     @Operation(summary = "Get all tasks",
             description = "Get all tasks by project ID")
-    public List<TaskResponseDto> getAllByProjectId(@PathVariable Long projectId) {
-        return taskService.getAllByProjectId(projectId);
+    public List<TaskResponseDto> getAllByProjectId(
+            @RequestParam Long projectId,
+            Pageable pageable) {
+
+        return taskService.getAllByProjectId(projectId, pageable);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get task by ID",
             description = "Get all information about the task by ID")
-    public TaskResponseDto getTaskById(@PathVariable Long projectId, @PathVariable Long id) {
+    public TaskResponseDto getTaskById(@RequestParam Long projectId, @PathVariable Long id) {
         return taskService.getById(projectId, id);
     }
 
@@ -56,7 +61,7 @@ public class TaskController {
     @Operation(summary = "Update task by ID",
             description = "Update all information about the task by ID")
     public TaskResponseDto updateTask(
-            @PathVariable Long projectId,
+            @RequestParam Long projectId,
             @PathVariable Long id,
             @RequestBody @Valid CreateTaskRequestDto requestDto) {
 
@@ -67,7 +72,7 @@ public class TaskController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a task by ID",
             description = "Delete a task by ID, if there is one")
-    public void deleteTask(@PathVariable Long projectId, @PathVariable Long id) {
+    public void deleteTask(@RequestParam Long projectId, @PathVariable Long id) {
         taskService.delete(projectId, id);
     }
 }

@@ -13,6 +13,7 @@ import app.service.comment.CommentService;
 import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,8 +37,8 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<TaskResponseDto> getAllByProjectId(Long projectId) {
-        List<Task> tasks = taskRepository.findAllByProjectId(projectId);
+    public List<TaskResponseDto> getAllByProjectId(Long projectId, Pageable pageable) {
+        List<Task> tasks = taskRepository.findAllByProjectId(projectId, pageable);
         if (tasks.isEmpty()) {
             throw new EntityNotFoundException("No task found for project " + projectId);
         }
