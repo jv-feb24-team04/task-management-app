@@ -4,6 +4,7 @@ import app.dto.project.ProjectRequestDto;
 import app.dto.project.ProjectResponseDto;
 import app.dto.project.ProjectStatusDto;
 import app.service.project.ProjectService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -25,11 +26,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "Project management", description = "Endpoints for managing projects")
 @RestController
-@RequestMapping("/projects")
+@RequestMapping("/api/projects")
 @RequiredArgsConstructor
 public class ProjectController {
     private final ProjectService projectService;
 
+    @Operation(summary = "Create a project",
+            description = "Create a new project")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProjectResponseDto createProject(
@@ -38,6 +41,8 @@ public class ProjectController {
         return projectService.saveProject(projectDto);
     }
 
+    @Operation(summary = "Get all projects",
+            description = "Get all available projects with pagination and sorting")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ProjectResponseDto> getAllProjects(
@@ -47,6 +52,8 @@ public class ProjectController {
         return projectService.getAllProjects(pageable);
     }
 
+    @Operation(summary = "Get a specific project",
+            description = "Get a specific project by ID")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProjectResponseDto getProjectDetailsById(
@@ -55,6 +62,8 @@ public class ProjectController {
         return projectService.getProjectDetailsById(id);
     }
 
+    @Operation(summary = "Update a specific project",
+            description = "Update a specific project by ID")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ProjectResponseDto updateProject(
@@ -64,6 +73,8 @@ public class ProjectController {
         return projectService.updateProject(id, projectDto);
     }
 
+    @Operation(summary = "Update a specific project status",
+            description = "Update a specific project status by ID")
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateStatus(

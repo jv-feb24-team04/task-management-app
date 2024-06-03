@@ -8,19 +8,21 @@ import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 
 public record ProjectRequestDto(
-        @NotBlank
-        @Size(max = 250)
+        @NotBlank(message = "Project name must be defined")
+        @Size(max = 250, message = "The length of the project name "
+                + "must be no more than 250 characters")
         String name,
-        @NotBlank
-        @Size(max = 250)
+        @NotBlank(message = "Project description must be defined")
+        @Size(max = 250, message = "The length of the project description "
+                + "must be no more than 250 characters")
         String description,
-        @NotNull
-        @FutureOrPresent
-        @JsonFormat(pattern = "dd-MM-yyyy")
+        @NotNull(message = "Project start date must be defined")
+        @FutureOrPresent(message = "Project start date must be at least the current date")
+        @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate startDate,
-        @NotNull
-        @FutureOrPresent
-        @JsonFormat(pattern = "dd-MM-yyyy")
+        @NotNull(message = "Project end date must be defined")
+        @FutureOrPresent(message = "Project end date must be at least the current date")
+        @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDate endDate
 ) {
 }
