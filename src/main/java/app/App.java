@@ -2,6 +2,8 @@ package app;
 
 import app.exception.TelegramBotInitializationException;
 import app.service.notification.NotificationService;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.info.Info;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +14,13 @@ import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
 
 @SpringBootApplication
 @RequiredArgsConstructor
+@OpenAPIDefinition(
+        info = @Info(
+                title = "Task management application",
+                version = "0.1",
+                description = "APIs for managing task manager"
+        )
+)
 public class App {
     public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(App.class, args);
