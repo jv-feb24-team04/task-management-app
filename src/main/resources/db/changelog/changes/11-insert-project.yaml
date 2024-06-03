@@ -1,0 +1,35 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-project
+      author: makaroshyna
+      changes:
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: name
+                  value: "Book store"
+              - column:
+                  name: description
+                  value: "This is a book store project"
+              - column:
+                  name: start_date
+                  valueDate: "2024-06-06"
+              - column:
+                  name: end_date
+                  valueDate: "2024-07-02"
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: name
+                  value: "Management project"
+              - column:
+                  name: description
+                  value: "This is a management project"
+              - column:
+                  name: start_date
+                  valueDate: "2024-08-10"
+              - column:
+                  name: end_date
+                  valueDate: "2024-10-24"

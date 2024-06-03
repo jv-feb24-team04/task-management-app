@@ -3,10 +3,12 @@ package app.service.task;
 import app.dto.task.CreateTaskRequestDto;
 import app.dto.task.TaskDtoWithoutLabelsAndComments;
 import app.dto.task.TaskResponseDto;
+import app.dto.task.UpdateTaskRequestDto;
 import app.exception.EntityNotFoundException;
 import app.mapper.TaskMapper;
 import app.model.Project;
 import app.model.Task;
+import app.model.TaskStatus;
 import app.repository.ProjectRepository;
 import app.repository.TaskRepository;
 import app.service.comment.CommentService;
@@ -27,10 +29,11 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskDtoWithoutLabelsAndComments save(CreateTaskRequestDto requestDto, Long projectId) {
         Project project = getProjectById(projectId);
-        Task task = taskMapper.toModel(requestDto);
+        Task task = taskMapper.toModelCreate(requestDto);
         task.setProject(project);
-        task.setComments(Set.of());
+        task.setStatus(TaskStatus.NOT_STARTED);
         task.setLabels(List.of());
+        task.setComments(Set.of());
         project.getTasks().add(task);
 
         return taskMapper.toDtoWithoutLabelsAndComments(taskRepository.save(task));
@@ -49,37 +52,36 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public TaskResponseDto getById(Long projectId, Long id) {
-        Task task = getTask(projectId, id);
+    public TaskResponseDto getById(Long id) {
+        Task task = getTask(id);
         return taskMapper.toDto(task);
     }
 
     @Override
-    public TaskResponseDto updateStatus(Long projectId, Long id, CreateTaskRequestDto requestDto) {
-        if (taskRepository.findByIdAndProjectId(id, projectId).isPresent()) {
-            Task task = taskMapper.toModel(requestDto);
-            task.setId(id);
-            return taskMapper.toDto(taskRepository.save(task));
-        }
-        throw new EntityNotFoundException("Can't find task with id " + id);
+    public TaskResponseDto updateTask(Long id, UpdateTaskRequestDto requestDto) {
+        Task taskFromDb = getTask(id);
+        Task task = taskMapper.toModelUpdate(requestDto);
+        task.setProject(getProjectById(taskFromDb.getProject().getId()));
+        task.setId(id);
+        return taskMapper.toDto(taskRepository.save(task));
     }
 
     @Override
-    public void delete(Long projectId, Long id) {
-        Task task = getTask(projectId, id);
+    public void delete(Long id) {
+        Task task = getTask(id);
         task.getComments().forEach(comment -> commentService.delete(comment.getId()));
         taskRepository.delete(task);
     }
 
-    private Task getTask(Long projectId, Long id) {
+    private Task getTask(Long id) {
         return taskRepository
-                .findByIdAndProjectId(id, projectId)
+                .findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find task with id " + id));
     }
 
     private Project getProjectById(Long id) {
         return projectRepository
-                .findById(id)
+                .findProjectById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find project by id: " + id));
     }
 }

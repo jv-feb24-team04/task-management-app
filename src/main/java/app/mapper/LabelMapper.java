@@ -4,7 +4,9 @@ import app.config.MapperConfig;
 import app.dto.label.LabelRequestDto;
 import app.dto.label.LabelResponseDto;
 import app.model.Label;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import org.mapstruct.Mapper;
 import org.mapstruct.Named;
@@ -20,7 +22,7 @@ public interface LabelMapper {
 
     @Named("setLabels")
     default List<LabelResponseDto> setLabels(List<Label> labels) {
-        return labels.stream()
+        return Optional.ofNullable(labels).orElse(Collections.emptyList()).stream()
                 .map(this::toDto)
                 .toList();
     }

@@ -4,6 +4,7 @@ import app.config.MapperConfig;
 import app.dto.task.CreateTaskRequestDto;
 import app.dto.task.TaskDtoWithoutLabelsAndComments;
 import app.dto.task.TaskResponseDto;
+import app.dto.task.UpdateTaskRequestDto;
 import app.model.Task;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -11,7 +12,10 @@ import org.mapstruct.Mapping;
 @Mapper(config = MapperConfig.class, uses = {LabelMapper.class, CommentMapper.class})
 public interface TaskMapper {
     @Mapping(target = "assignee.id", source = "assigneeId")
-    Task toModel(CreateTaskRequestDto requestDto);
+    Task toModelCreate(CreateTaskRequestDto requestDto);
+
+    @Mapping(target = "assignee.id", source = "assigneeId")
+    Task toModelUpdate(UpdateTaskRequestDto requestDto);
 
     @Mapping(target = "projectId", source = "project.id")
     @Mapping(target = "assigneeId", source = "assignee.id")
