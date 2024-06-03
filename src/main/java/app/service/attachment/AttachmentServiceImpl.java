@@ -5,9 +5,10 @@ import app.exception.EntityNotFoundException;
 import app.exception.NotUniqueValueException;
 import app.mapper.AttachmentMapper;
 import app.model.Attachment;
+import app.model.Task;
 import app.repository.AttachmentRepository;
-import app.repository.TaskRepository;
 import app.service.dropbox.DropboxService;
+import app.service.task.TaskService;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -20,12 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class AttachmentServiceImpl implements AttachmentService {
     private final AttachmentRepository attachmentRepository;
-    private final TaskRepository taskRepository;
+    private final TaskService taskService;
     private final AttachmentMapper attachmentMapper;
     private final DropboxService dropboxService;
 
     @Override
-    public AttachmentResponseDto create(String filePath, Long taskId) {
+    public AttachmentResponseDto create(String filePath, Long taskId, Long userId) {
+        checkTaskOwnership(taskId, userId);
         String fileName = getFileName(filePath);
         if (attachmentRepository.existsByTaskIdAndFileName(taskId, fileName)) {
             throw new NotUniqueValueException("File name must be unique");
@@ -37,14 +39,15 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public AttachmentResponseDto getById(Long attachmentId) {
-        Attachment attachment = attachmentRepository.findById(attachmentId).orElseThrow(()
-                -> new EntityNotFoundException("Can't find attachment by id: " + attachmentId));
+    public AttachmentResponseDto getById(Long attachmentId, Long userId) {
+        Attachment attachment = getAttachment(attachmentId);
+        checkTaskOwnership(attachment.getTask().getId(), userId);
         return mapToDtoAndSetFileLink(attachment);
     }
 
     @Override
-    public List<AttachmentResponseDto> getAllByTaskId(Long taskId) {
+    public List<AttachmentResponseDto> getAllByTaskId(Long taskId, Long userId) {
+        checkTaskOwnership(taskId, userId);
         if (attachmentRepository.existsByTaskId(taskId)) {
             return attachmentRepository.findAllByTaskId(taskId).stream()
                     .map(this::mapToDtoAndSetFileLink)
@@ -54,7 +57,9 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public void deleteById(Long attachmentId) {
+    public void deleteById(Long attachmentId, Long userId) {
+        Long taskId = getAttachment(attachmentId).getTask().getId();
+        checkTaskOwnership(taskId, userId);
         String dropBoxFileId = getDropBoxFileId(attachmentId);
         dropboxService.deleteById(dropBoxFileId);
         attachmentRepository.deleteById(attachmentId);
@@ -62,7 +67,8 @@ public class AttachmentServiceImpl implements AttachmentService {
 
     @Override
     @Transactional
-    public void deleteAllByTaskId(Long taskId) {
+    public void deleteAllByTaskId(Long taskId, Long userId) {
+        checkTaskOwnership(taskId, userId);
         dropboxService.deleteAllByTaskId(taskId);
         attachmentRepository.deleteAllByTaskId(taskId);
     }
@@ -77,15 +83,13 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     private String getDropBoxFileId(Long attachmentId) {
-        Attachment attachment = attachmentRepository.findById(attachmentId).orElseThrow(()
-                -> new EntityNotFoundException("Can't find attachment by id: " + attachmentId));
+        Attachment attachment = getAttachment(attachmentId);
         return attachment.getDropboxFileId();
     }
 
     private Attachment saveNewAttachment(String filePath, Long taskId) {
         Attachment attachment = new Attachment();
-        attachment.setTask(taskRepository.findById(taskId).orElseThrow(()
-                        -> new EntityNotFoundException("Can't find task by id: " + taskId)));
+        attachment.setTask(getTask(taskId));
         attachment.setDropboxFileId(dropboxService.uploadFile(filePath, taskId));
         attachment.setFileName(getFileName(filePath));
         attachment.setUploadDate(LocalDateTime.now());
@@ -96,5 +100,23 @@ public class AttachmentServiceImpl implements AttachmentService {
         AttachmentResponseDto responseDto = attachmentMapper.toDto(attachment);
         responseDto.setFilePublicLink(getFilePublicLink(attachment.getDropboxFileId()));
         return responseDto;
+    }
+
+    private void checkTaskOwnership(Long taskId, Long userId) {
+        Task task = getTask(taskId);
+        if (!task.getAssignee().getId().equals(userId)) {
+            throw new EntityNotFoundException("Can't find task by id: " + taskId);
+        }
+    }
+
+    private Attachment getAttachment(Long attachmentId) {
+        return attachmentRepository.findById(attachmentId).orElseThrow(()
+                -> new EntityNotFoundException("Can't find attachment by id: "
+                + attachmentId));
+    }
+
+    private Task getTask(Long taskId) {
+        return taskService.getTaskById(taskId).orElseThrow(()
+                -> new EntityNotFoundException("Can't find task by id: " + taskId));
     }
 }
