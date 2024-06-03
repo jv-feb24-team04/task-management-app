@@ -2,6 +2,7 @@ databaseChangeLog:
   - changeSet:
       id: create-roles-table
       author: vlasenko_yevhenii
+      runOnChange: true
       changes:
         - createTable:
             tableName: roles
@@ -18,7 +19,3 @@ databaseChangeLog:
                   constraints:
                     nullable: false
                     unique: true
-              - column:
-                  name: is_deleted
-                  type: bit
-                  defaultValue: '0'
