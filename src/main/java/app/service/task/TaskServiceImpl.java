@@ -7,11 +7,11 @@ import app.exception.EntityNotFoundException;
 import app.mapper.TaskMapper;
 import app.model.Project;
 import app.model.Task;
+import app.model.TaskStatus;
 import app.repository.ProjectRepository;
 import app.repository.TaskRepository;
 import app.service.comment.CommentService;
 import java.util.List;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,8 +29,7 @@ public class TaskServiceImpl implements TaskService {
         Project project = getProjectById(projectId);
         Task task = taskMapper.toModel(requestDto);
         task.setProject(project);
-        task.setComments(Set.of());
-        task.setLabels(List.of());
+        task.setStatus(TaskStatus.NOT_STARTED);
         project.getTasks().add(task);
 
         return taskMapper.toDtoWithoutLabelsAndComments(taskRepository.save(task));
@@ -79,7 +78,7 @@ public class TaskServiceImpl implements TaskService {
 
     private Project getProjectById(Long id) {
         return projectRepository
-                .findById(id)
+                .findProjectById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Can't find project by id: " + id));
     }
 }
