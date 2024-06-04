@@ -76,7 +76,6 @@ public class TaskController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-=======
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete task",
