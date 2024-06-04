@@ -6,17 +6,12 @@ import app.dto.task.UpdateTaskRequestDto;
 import app.model.User;
 import app.service.task.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ProblemDetail;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -42,15 +37,6 @@ public class TaskController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Successfully created"),
-            @ApiResponse(responseCode = "400", description = "Invalid request body",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "401", description = "Required authorization",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "403", description = "Not enough access rights",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-    })
     public TaskResponseDto createTask(
             @RequestParam Long projectId,
             @RequestBody @Valid CreateTaskRequestDto requestDto) {
@@ -63,11 +49,6 @@ public class TaskController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
-            @ApiResponse(responseCode = "401", description = "Required authorization",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-    })
     public List<TaskResponseDto> getAllByProjectId(
             @RequestParam Long projectId,
             Pageable pageable) {
@@ -79,13 +60,6 @@ public class TaskController {
             description = "Get all information about the task by ID")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{id}")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Successfully retrieved"),
-            @ApiResponse(responseCode = "401", description = "Required authorization",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "404", description = "Task with this id not exist",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
-    })
     public TaskResponseDto getTaskById(@PathVariable Long id) {
         return taskService.getById(id);
     }
@@ -94,15 +68,6 @@ public class TaskController {
             description = "Update all information about the task by ID")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "202", description = "Successfully updated"),
-            @ApiResponse(responseCode = "400", description = "Invalid request body",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "401", description = "Required authorization",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "403", description = "Not enough access rights",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-    })
     public TaskResponseDto updateTask(
             @PathVariable Long id,
             @RequestBody @Valid UpdateTaskRequestDto requestDto) {
@@ -115,15 +80,6 @@ public class TaskController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "No content - successfully deleted"),
-            @ApiResponse(responseCode = "401", description = "Required authorization",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "403", description = "Not enough access rights",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class))),
-            @ApiResponse(responseCode = "404", description = "Not found - wrong id",
-                    content = @Content(schema = @Schema(implementation = ProblemDetail.class)))
-    })
     public void deleteTask(
             @AuthenticationPrincipal User user,
             @PathVariable Long id
