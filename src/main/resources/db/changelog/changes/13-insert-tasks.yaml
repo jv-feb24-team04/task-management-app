@@ -1,0 +1,53 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-tasks
+      author: fakhrutdinov-eduard
+      changes:
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "TASK 1"
+              - column:
+                  name: description
+                  value: "Create user entity as described in README.md"
+              - column:
+                  name: priority
+                  value: "HIGH"
+              - column:
+                  name: status
+                  value: "IN_PROGRESS"
+              - column:
+                  name: due_date
+                  valueDate: "2024-06-05"
+              - column:
+                  name: project_id
+                  valueComputed: (SELECT id FROM projects WHERE name = 'Book store')
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email = 'admin@gmail.com')
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "TASK 2"
+              - column:
+                  name: description
+                  value: "Create comment entity as described in README.md"
+              - column:
+                  name: priority
+                  value: "HIGH"
+              - column:
+                  name: status
+                  value: "IN_PROGRESS"
+              - column:
+                  name: due_date
+                  valueDate: "2024-06-06"
+              - column:
+                  name: project_id
+                  valueComputed: (SELECT id FROM projects WHERE name = 'Management project')
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email = 'user@gmail.com')

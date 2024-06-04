@@ -24,7 +24,7 @@ public interface CommentMapper {
     @Mapping(target = "timeStamp", ignore = true)
     @Mapping(target = "lastEdit", ignore = true)
     Comment toEntity(CommentRequestDto requestDto);
-  
+
     @Named("setComments")
     default Set<CommentResponseDto> setComments(Set<Comment> comments) {
         return Optional.ofNullable(comments).orElse(Collections.emptySet()).stream()

@@ -45,14 +45,14 @@ public class LabelServiceImpl implements LabelService {
             Label updatedLabel = repository.save(existingLabel);
             return mapper.toDto(updatedLabel);
         }
-        throw new EntityNotFoundException("Failed to find entity by id=" + id);
+        throw new EntityNotFoundException("Failed to find Label by id=" + id);
     }
 
     @Override
     public void delete(Long id) {
         Label label = repository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException(
-                            "Failed to find entity by id=" + id));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Failed to find Label by id=" + id));
         repository.delete(label);
     }
 }

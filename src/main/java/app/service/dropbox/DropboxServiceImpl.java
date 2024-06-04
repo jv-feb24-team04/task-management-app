@@ -37,7 +37,7 @@ public class DropboxServiceImpl implements DropboxService {
             return metadata.getId();
         } catch (Exception e) {
             throw new RuntimeException("Can't upload file by this path: "
-            + filePath, e);
+                    + filePath, e);
         }
     }
 

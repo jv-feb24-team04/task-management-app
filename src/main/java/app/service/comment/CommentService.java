@@ -12,7 +12,7 @@ public interface CommentService {
 
     List<CommentResponseDto> getByTaskId(Long taskId, Pageable pageable);
 
-    CommentResponseDto update(Long commentId, CommentRequestDto commentRequestDto);
+    CommentResponseDto update(Long commentId, CommentRequestDto commentRequestDto, Long userId);
 
-    void delete(Long commentId);
+    void delete(Long commentId, Long userId);
 }

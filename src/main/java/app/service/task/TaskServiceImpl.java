@@ -50,7 +50,7 @@ public class TaskServiceImpl implements TaskService {
     public List<TaskResponseDto> getAllByProjectId(Long projectId, Pageable pageable) {
         List<Task> tasks = taskRepository.findAllByProjectId(projectId, pageable);
         if (tasks.isEmpty()) {
-            throw new EntityNotFoundException("No task found for project " + projectId);
+            throw new EntityNotFoundException("Failed to find Task by id=" + projectId);
         }
 
         return tasks.stream()
@@ -84,21 +84,22 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id, Long userId) {
         Task task = getTask(id);
-        task.getComments().forEach(comment -> commentService.delete(comment.getId()));
+        task.getComments().forEach(comment -> commentService.delete(comment.getId(), userId));
         taskRepository.delete(task);
     }
 
     private Task getTask(Long id) {
         return taskRepository
                 .findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Can't find task with id " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Failed to find Task by id=" + id));
     }
 
     private Project getProjectById(Long id) {
         return projectRepository
                 .findProjectById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Can't find project by id: " + id));
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Failed to find Project by id=" + id));
     }
 }
