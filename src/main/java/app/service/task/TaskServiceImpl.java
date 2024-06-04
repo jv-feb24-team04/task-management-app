@@ -11,11 +11,13 @@ import app.model.TaskStatus;
 import app.repository.ProjectRepository;
 import app.repository.TaskRepository;
 import app.service.comment.CommentService;
+import app.service.notification.NotificationService;
 import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +26,9 @@ public class TaskServiceImpl implements TaskService {
     private final TaskMapper taskMapper;
     private final ProjectRepository projectRepository;
     private final CommentService commentService;
+    private final NotificationService notificationService;
 
+    @Transactional
     @Override
     public TaskResponseDto save(CreateTaskRequestDto requestDto, Long projectId) {
         Project project = getProjectById(projectId);
@@ -35,7 +39,10 @@ public class TaskServiceImpl implements TaskService {
         task.setComments(Set.of());
         project.getTasks().add(task);
 
-        return taskMapper.toDto(taskRepository.save(task));
+        Task createdTask = taskRepository.save(task);
+        notificationService.notifyAssigneeOnTaskCreate(createdTask);
+
+        return taskMapper.toDto(createdTask);
     }
 
     @Override
@@ -56,13 +63,18 @@ public class TaskServiceImpl implements TaskService {
         return taskMapper.toDto(task);
     }
 
+    @Transactional
     @Override
     public TaskResponseDto updateTask(Long id, UpdateTaskRequestDto requestDto) {
         Task taskFromDb = getTask(id);
         Task task = taskMapper.toModelUpdate(requestDto);
         task.setProject(getProjectById(taskFromDb.getProject().getId()));
         task.setId(id);
-        return taskMapper.toDto(taskRepository.save(task));
+
+        Task updatedTask = taskRepository.save(task);
+        notificationService.notifyAssigneeOnTaskUpdate(task);
+
+        return taskMapper.toDto(updatedTask);
     }
 
     @Override
