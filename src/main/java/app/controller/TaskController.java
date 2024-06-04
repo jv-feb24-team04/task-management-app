@@ -33,8 +33,8 @@ public class TaskController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    @Operation(summary = "Create a new task",
-            description = "Create a new task for a project with project ID")
+    @Operation(summary = "Add task",
+            description = "Add a new task for a project identified by its ID")
     public TaskResponseDto createTask(
             @RequestParam Long projectId,
             @RequestBody @Valid CreateTaskRequestDto requestDto) {
@@ -43,8 +43,8 @@ public class TaskController {
     }
 
     @GetMapping
-    @Operation(summary = "Get all tasks",
-            description = "Get all tasks by project ID")
+    @Operation(summary = "Retrieve all tasks by user ID",
+            description = "Retrieve all tasks associated with a project identified by its ID")
     public List<TaskResponseDto> getAllByProjectId(
             @RequestParam Long projectId,
             Pageable pageable) {
@@ -53,15 +53,15 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get task by ID",
-            description = "Get all information about the task by ID")
+    @Operation(summary = "Retrieve task by its ID",
+            description = "Retrieve all information about the task by its ID")
     public TaskResponseDto getTaskById(@PathVariable Long id) {
         return taskService.getById(id);
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Update task by ID",
-            description = "Update all information about the task by ID")
+    @Operation(summary = "Update task",
+            description = "Update information about the task by its ID")
     public TaskResponseDto updateTask(
             @PathVariable Long id,
             @RequestBody @Valid UpdateTaskRequestDto requestDto) {
@@ -71,8 +71,8 @@ public class TaskController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete a task by ID",
-            description = "Delete a task by ID, if there is one")
+    @Operation(summary = "Delete task",
+            description = "Delete a task by its unique identifier")
     public void deleteTask(
             @AuthenticationPrincipal User user,
             @PathVariable Long id

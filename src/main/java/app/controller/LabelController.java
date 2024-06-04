@@ -28,27 +28,30 @@ public class LabelController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    @Operation(summary = "Label creation", description = "Create and save a new label")
+    @Operation(summary = "Add label",
+            description = "Add a new label")
     public LabelResponseDto createLabel(@Valid @RequestBody LabelRequestDto dto) {
         return labelService.create(dto);
     }
 
     @GetMapping("/by_project/{projectId}")
-    @Operation(summary = "Get all labels by project id",
-            description = "Retrieve all labels related to the project")
+    @Operation(summary = "Retrieve all labels by project Id",
+            description = "Retrieve all labels associated with a project identified by its Id")
     public Set<LabelResponseDto> getLabelsByProjectId(@PathVariable Long projectId) {
         return labelService.getAllForProject(projectId);
     }
 
     @PutMapping("/{id}")
-    @Operation(summary = "Label update", description = "Update the label entity by id")
+    @Operation(summary = "Update label",
+            description = "Update the label by its unique identifier")
     public LabelResponseDto updateLabel(@PathVariable Long id,
                                         @Valid @RequestBody LabelRequestDto dto) {
         return labelService.update(id, dto);
     }
 
     @DeleteMapping("/{id}")
-    @Operation(summary = "label delete", description = "Delete the label entity by id")
+    @Operation(summary = "Delete label",
+            description = "Delete the label by its unique identifier")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteLabel(@PathVariable Long id) {
         labelService.delete(id);

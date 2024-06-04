@@ -5,6 +5,7 @@ import app.dto.user.UserUpdateInfoDto;
 import app.dto.user.UserUpdateRoleDto;
 import app.model.User;
 import app.service.user.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,6 +25,8 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}/role")
+    @Operation(summary = "Update user role",
+            description = "Update the user role by its unique identifier")
     public void updateUserRole(@PathVariable Long id,
                                @RequestBody UserUpdateRoleDto updateRoleDto) {
         userService.updateUserRole(id, updateRoleDto);
@@ -31,12 +34,16 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/me")
+    @Operation(summary = "Retrieve authenticated user",
+            description = "Retrieve all information about the currently authenticated user")
     public UserResponseDto getUserInfo(@AuthenticationPrincipal User user) {
         return userService.getUserInfo(user);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/me")
+    @Operation(summary = "Update user",
+            description = "Update information for the currently authenticated user")
     public UserResponseDto updateUserInfo(@AuthenticationPrincipal User user,
                                           @RequestBody UserUpdateInfoDto updateInfoDto) {
         return userService.updateUserInfo(user, updateInfoDto);
