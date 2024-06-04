@@ -35,7 +35,31 @@ databaseChangeLog:
                   value: "TASK 2"
               - column:
                   name: description
-                  value: "Create comment entity as described in README.md"
+                  value: "Implement User Service"
+              - column:
+                  name: priority
+                  value: "HIGH"
+              - column:
+                  name: status
+                  value: "IN_PROGRESS"
+              - column:
+                  name: due_date
+                  valueDate: "2024-06-05"
+              - column:
+                  name: project_id
+                  valueComputed: (SELECT id FROM projects WHERE name = 'Book store')
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email = 'admin@gmail.com')
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "TASK 3"
+              - column:
+                  name: description
+                  value: "Create repository"
               - column:
                   name: priority
                   value: "HIGH"
@@ -51,3 +75,76 @@ databaseChangeLog:
               - column:
                   name: user_id
                   valueComputed: (SELECT id FROM users WHERE email = 'user@gmail.com')
+
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "TASK 4"
+              - column:
+                  name: description
+                  value: "Create Task entity"
+              - column:
+                  name: priority
+                  value: "HIGH"
+              - column:
+                  name: status
+                  value: "IN_PROGRESS"
+              - column:
+                  name: due_date
+                  valueDate: "2024-06-05"
+              - column:
+                  name: project_id
+                  valueComputed: (SELECT id FROM projects WHERE name = 'Management project')
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email = 'admin@gmail.com')
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "TASK 5"
+              - column:
+                  name: description
+                  value: "Creat Policy entity"
+              - column:
+                  name: priority
+                  value: "HIGH"
+              - column:
+                  name: status
+                  value: "IN_PROGRESS"
+              - column:
+                  name: due_date
+                  valueDate: "2024-06-05"
+              - column:
+                  name: project_id
+                  valueComputed: (SELECT id FROM projects WHERE name = 'Insurance app')
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email = 'testMail1@gmail.com')
+        - insert:
+            tableName: tasks
+            columns:
+              - column:
+                  name: name
+                  value: "TASK 6"
+              - column:
+                  name: description
+                  value: "Implement Policy Service"
+              - column:
+                  name: priority
+                  value: "HIGH"
+              - column:
+                  name: status
+                  value: "IN_PROGRESS"
+              - column:
+                  name: due_date
+                  valueDate: "2024-06-06"
+              - column:
+                  name: project_id
+                  valueComputed: (SELECT id FROM projects WHERE name = 'Insurance app')
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email = 'testMail1@gmail.com')
