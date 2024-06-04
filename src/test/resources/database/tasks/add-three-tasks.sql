@@ -1,0 +1,3 @@
+INSERT INTO tasks (id, name, priority, status, due_date, project_id, user_id) VALUES (1, "Configure repo", "MEDIUM", "IN_PROGRESS", "2024-08-01", 1, 1);
+INSERT INTO tasks (id, name, priority, status, due_date, project_id, user_id) VALUES (2, "Add User", "HIGH", "NOT_STARTED", "2024-08-02", 1, 2);
+INSERT INTO tasks (id, name, priority, status, due_date, project_id, user_id) VALUES (3, "Add liquibase", "LOW", "COMPLETED", "2024-05-29", 2, 1);
