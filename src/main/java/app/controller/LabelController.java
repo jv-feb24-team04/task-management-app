@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LabelController {
     private final LabelService labelService;
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Add label",
@@ -34,6 +36,7 @@ public class LabelController {
         return labelService.create(dto);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/by_project/{projectId}")
     @Operation(summary = "Retrieve all labels by project Id",
             description = "Retrieve all labels associated with a project identified by its Id")
@@ -41,6 +44,7 @@ public class LabelController {
         return labelService.getAllForProject(projectId);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/{id}")
     @Operation(summary = "Update label",
             description = "Update the label by its unique identifier")
@@ -49,6 +53,7 @@ public class LabelController {
         return labelService.update(id, dto);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete label",
             description = "Delete the label by its unique identifier")
