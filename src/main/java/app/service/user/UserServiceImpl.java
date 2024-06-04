@@ -47,15 +47,11 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new EntityNotFoundException("User not found with Id: "
                         + userId));
-        Long roleId;
-        if ((updateRoleDto.getRole()).equals("ADMIN")) {
-            roleId = 2L;
-        } else {
-            roleId = 1L;
+
+        if (roleRepository.findByRole(Role.RoleName.valueOf(updateRoleDto.getRole())) == null) {
+            throw new EntityNotFoundException("Role " + updateRoleDto.getRole() + " not found");
         }
-        Role role = roleRepository.findById(roleId)
-                .orElseThrow(() -> new EntityNotFoundException("Role not found with role: "
-                        + updateRoleDto.getRole()));
+        Role role = roleRepository.findByRole(Role.RoleName.valueOf(updateRoleDto.getRole()));
 
         user.getRoles().add(role);
         userRepository.save(user);
