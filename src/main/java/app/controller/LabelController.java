@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LabelController {
     private final LabelService labelService;
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Label creation", description = "Create and save a new label")
@@ -33,6 +35,7 @@ public class LabelController {
         return labelService.create(dto);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/by_project/{projectId}")
     @Operation(summary = "Get all labels by project id",
             description = "Retrieve all labels related to the project")
@@ -40,6 +43,7 @@ public class LabelController {
         return labelService.getAllForProject(projectId);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/{id}")
     @Operation(summary = "Label update", description = "Update the label entity by id")
     public LabelResponseDto updateLabel(@PathVariable Long id,
@@ -47,6 +51,7 @@ public class LabelController {
         return labelService.update(id, dto);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{id}")
     @Operation(summary = "label delete", description = "Delete the label entity by id")
     @ResponseStatus(HttpStatus.NO_CONTENT)

@@ -11,6 +11,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CommentController {
     private final CommentService commentService;
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/{taskId}")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
@@ -43,6 +45,7 @@ public class CommentController {
         return commentService.save(commentRequestDto, user.getId(), taskId);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{taskId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(
@@ -56,6 +59,7 @@ public class CommentController {
         return commentService.getByTaskId(taskId, pageable);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     @Operation(
@@ -69,6 +73,7 @@ public class CommentController {
         return commentService.getByUserId(user.getId(), pageable);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/{commentId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(
@@ -83,6 +88,7 @@ public class CommentController {
         return commentService.update(commentId, commentRequestDto, user.getId());
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{commentId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(
