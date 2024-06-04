@@ -101,4 +101,12 @@ public class UserServiceImpl implements UserService {
         }
         throw new EntityNotFoundException("Failed to find User by id=" + id);
     }
+
+    @Override
+    public void deleteUserById(Long id) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Failed to find User by id=" + id));
+        userRepository.delete(user);
+    }
 }
