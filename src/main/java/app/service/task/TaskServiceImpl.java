@@ -93,6 +93,7 @@ public class TaskServiceImpl implements TaskService {
     private Project getProjectById(Long id) {
         return projectRepository
                 .findProjectById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Failed to find Project by id=" + id));
+                .orElseThrow(() ->
+                        new EntityNotFoundException("Failed to find Project by id=" + id));
     }
 }
