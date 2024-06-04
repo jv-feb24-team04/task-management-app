@@ -13,6 +13,15 @@ databaseChangeLog:
                   name: color
                   value: red
         - insert:
+            tableName: tasks_labels
+            columns:
+              - column:
+                  name: task_id
+                  valueComputed: (SELECT id FROM tasks WHERE name = 'TASK 1')
+              - column:
+                  name: label_id
+                  valueComputed: (SELECT id FROM labels WHERE name = 'High priority label')
+        - insert:
             tableName: labels
             columns:
               - column:
@@ -22,6 +31,15 @@ databaseChangeLog:
                   name: color
                   value: green
         - insert:
+            tableName: tasks_labels
+            columns:
+              - column:
+                  name: task_id
+                  valueComputed: (SELECT id FROM tasks WHERE name = 'TASK 4')
+              - column:
+                  name: label_id
+                  valueComputed: (SELECT id FROM labels WHERE name = 'Low priority label')
+        - insert:
             tableName: labels
             columns:
               - column:
@@ -30,3 +48,12 @@ databaseChangeLog:
               - column:
                   name: color
                   value: gray
+        - insert:
+            tableName: tasks_labels
+            columns:
+              - column:
+                  name: task_id
+                  valueComputed: (SELECT id FROM tasks WHERE name = 'TASK 3')
+              - column:
+                  name: label_id
+                  valueComputed: (SELECT id FROM labels WHERE name = 'Default label')

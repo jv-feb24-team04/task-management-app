@@ -1,7 +1,7 @@
 databaseChangeLog:
   - changeSet:
       id: create-labels-table
-      author: valsenko_yevhenii
+      author: vlasenko_yevhenii
       changes:
         - createTable:
             tableName: labels
