@@ -35,7 +35,7 @@ public class LabelController {
 
     @GetMapping("/by_project/{projectId}")
     @Operation(summary = "Get all labels by project id",
-                description = "Retrieve all labels related to the project")
+            description = "Retrieve all labels related to the project")
     public Set<LabelResponseDto> getLabelsByProjectId(@PathVariable Long projectId) {
         return labelService.getAllForProject(projectId);
     }

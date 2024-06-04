@@ -70,8 +70,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentResponseDto update(Long commentId, CommentRequestDto commentRequestDto) {
-        Comment comment = getCommentById(commentId);
+    public CommentResponseDto update(
+            Long commentId,
+            CommentRequestDto commentRequestDto,
+            Long userId
+    ) {
+        Comment comment = getUserCommentOrThrow(commentId, userId);
 
         comment.setText(commentRequestDto.getText());
         comment.setLastEdit(LocalDateTime.now());
@@ -80,15 +84,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void delete(Long commentId) {
-        Comment comment = getCommentById(commentId);
+    public void delete(Long commentId, Long userId) {
+        Comment comment = getUserCommentOrThrow(commentId, userId);
         commentRepository.delete(comment);
     }
 
-    private Comment getCommentById(Long commentId) {
-        return commentRepository.findById(commentId)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Failed to find Comment by id=" + commentId)
-                );
+    private Comment getUserCommentOrThrow(Long commentId, Long userId) {
+        return commentRepository.findByIdAndUserId(commentId, userId)
+                .orElseThrow(() -> new EntityNotFoundException("Comment not found for this user"));
     }
 }

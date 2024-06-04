@@ -51,8 +51,8 @@ public class LabelServiceImpl implements LabelService {
     @Override
     public void delete(Long id) {
         Label label = repository.findById(id)
-                    .orElseThrow(() -> new EntityNotFoundException(
-                            "Failed to find Label by id=" + id));
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Failed to find Label by id=" + id));
         repository.delete(label);
     }
 }

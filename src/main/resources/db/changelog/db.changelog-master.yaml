@@ -26,3 +26,7 @@ databaseChangeLog:
       file: db/changelog/changes/11-insert-project.yaml
   - include:
       file: db/changelog/changes/12-insert-users.yaml
+  - include:
+      file: db/changelog/changes/13-insert-tasks.yaml
+  - include:
+      file: db/changelog/changes/14-insert-comments.yaml
