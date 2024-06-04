@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AttachmentController {
     private final AttachmentService attachmentService;
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = "multipart/form-data")
     @Operation(summary = "Create a new attachment",
@@ -37,7 +37,7 @@ public class AttachmentController {
         return attachmentService.create(filePath, taskId, getUserId(authentication));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{id}")
     @Operation(summary = "Get attachment by ID",
             description = "Get all information about the attachment by ID")
@@ -46,7 +46,7 @@ public class AttachmentController {
         return attachmentService.getById(id, getUserId(authentication));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{id}/all")
     @Operation(summary = "Get all attachments",
             description = "Get all attachments by task ID")
@@ -55,7 +55,7 @@ public class AttachmentController {
         return attachmentService.getAllByTaskId(id, getUserId(authentication));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete an attachment by ID",
             description = "Delete an attachment by ID")
@@ -65,7 +65,7 @@ public class AttachmentController {
         attachmentService.deleteById(id, getUserId(authentication));
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_USER')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{id}/all")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete all attachments by task ID",

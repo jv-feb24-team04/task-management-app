@@ -53,7 +53,8 @@ public class AttachmentServiceImpl implements AttachmentService {
                     .map(this::mapToDtoAndSetFileLink)
                     .toList();
         }
-        throw new EntityNotFoundException("Can't find any attachment by task id: " + taskId);
+        throw new EntityNotFoundException("Failed to find Attachment by Task id="
+                + taskId);
     }
 
     @Override
@@ -105,18 +106,20 @@ public class AttachmentServiceImpl implements AttachmentService {
     private void checkTaskOwnership(Long taskId, Long userId) {
         Task task = getTask(taskId);
         if (!task.getAssignee().getId().equals(userId)) {
-            throw new EntityNotFoundException("Can't find task by id: " + taskId);
+            throw new EntityNotFoundException("Failed to find Task by id="
+                    + taskId);
         }
     }
 
     private Attachment getAttachment(Long attachmentId) {
         return attachmentRepository.findById(attachmentId).orElseThrow(()
-                -> new EntityNotFoundException("Can't find attachment by id: "
+                -> new EntityNotFoundException("Failed to find Attachment by id="
                 + attachmentId));
     }
 
     private Task getTask(Long taskId) {
         return taskService.getTaskById(taskId).orElseThrow(()
-                -> new EntityNotFoundException("Can't find task by id: " + taskId));
+                -> new EntityNotFoundException("Failed to find Task by id="
+                + taskId));
     }
 }
