@@ -9,6 +9,7 @@ import app.dto.label.LabelResponseDto;
 import app.mapper.LabelMapper;
 import app.model.Label;
 import app.repository.LabelRepository;
+import java.util.Optional;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -86,5 +87,26 @@ class LabelServiceImplTest {
         Set<LabelResponseDto> result = labelService.getAllByTaskId(1L);
         assertNotNull(result);
         assertEquals(result.size(), 1);
+    }
+
+    @Test
+    public void update_ValidData_ReturnsLabelResponseDto() {
+        LabelRequestDto requestDto = new LabelRequestDto();
+        requestDto.setName("Label Name");
+
+        Label label = new Label();
+        label.setId(1L);
+        label.setName("Label Name");
+
+        LabelResponseDto responseDto = new LabelResponseDto();
+        responseDto.setName("Label Name");
+
+        when(labelRepository.findById(1L)).thenReturn(Optional.of(label));
+        when(labelRepository.save(label)).thenReturn(label);
+        when(labelMapper.toDto(label)).thenReturn(responseDto);
+
+        LabelResponseDto result = labelService.update(1L, requestDto);
+        assertNotNull(result);
+        assertEquals(responseDto.getName(), result.getName());
     }
 }
