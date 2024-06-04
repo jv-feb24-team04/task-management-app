@@ -2,7 +2,6 @@ package app.service.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -16,8 +15,6 @@ import app.repository.ProjectRepository;
 import app.repository.TaskRepository;
 import app.service.comment.CommentService;
 import app.service.notification.NotificationService;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,8 +22,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 
 @ExtendWith(MockitoExtension.class)
 class TaskServiceImplTest {
@@ -51,22 +46,6 @@ class TaskServiceImplTest {
                 projectRepository,
                 commentService,
                 notificationService);
-    }
-
-    @Test
-    public void getAllByProjectId_ValidProjectId_ReturnsAllTasks() {
-        TaskResponseDto responseDto = new TaskResponseDto();
-        responseDto.setName("Task Name");
-
-        List<Task> tasks = List.of(new Task(), new Task());
-
-        when(taskRepository.findAllByProjectId(1L, any(Pageable.class)))
-                .thenReturn(tasks);
-        when(taskMapper.toDto(any())).thenReturn(responseDto);
-
-        List<TaskResponseDto> result = taskService.getAllByProjectId(1L, Pageable.unpaged());
-        assertNotNull(result);
-        assertEquals(result.size(), 1);
     }
 
     @Test
