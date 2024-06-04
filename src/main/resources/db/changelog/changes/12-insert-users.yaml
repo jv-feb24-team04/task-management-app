@@ -28,6 +28,15 @@ databaseChangeLog:
                   name: role_id
                   valueComputed: (SELECT id FROM roles WHERE role = 'ADMIN')
         - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email = 'admin@gmail.com')
+              - column:
+                  name: role_id
+                  valueComputed: (SELECT id FROM roles WHERE role = 'USER')
+        - insert:
             tableName: users
             columns:
               - column:
@@ -48,6 +57,30 @@ databaseChangeLog:
               - column:
                   name: user_id
                   valueComputed: (SELECT id FROM users WHERE email = 'user@gmail.com')
+              - column:
+                  name: role_id
+                  valueComputed: (SELECT id FROM roles WHERE role = 'USER')
+        - insert:
+            tableName: users
+            columns:
+              - column:
+                  name: email
+                  value: "testMail1@gmail.com"
+              - column:
+                  name: password
+                  value: "$2a$10$vx3eVvMe4kn9h8iMliveKe73rvpYxYK9Gumy4lVKCZwkijAqzgJ9S"
+              - column:
+                  name: first_name
+                  value: "Elizabeth"
+              - column:
+                  name: last_name
+                  value: "Winsdor"
+        - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email = 'testMail1@gmail.com')
               - column:
                   name: role_id
                   valueComputed: (SELECT id FROM roles WHERE role = 'USER')

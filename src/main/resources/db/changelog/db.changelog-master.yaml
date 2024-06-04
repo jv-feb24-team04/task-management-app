@@ -30,3 +30,5 @@ databaseChangeLog:
       file: db/changelog/changes/13-insert-tasks.yaml
   - include:
       file: db/changelog/changes/14-insert-comments.yaml
+  - include:
+      file: db/changelog/changes/15-insert-labels.yaml

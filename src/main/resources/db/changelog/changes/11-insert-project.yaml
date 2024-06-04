@@ -33,3 +33,18 @@ databaseChangeLog:
               - column:
                   name: end_date
                   valueDate: "2024-10-24"
+        - insert:
+            tableName: projects
+            columns:
+              - column:
+                  name: name
+                  value: "Insurance app"
+              - column:
+                  name: description
+                  value: "This is an insurance app project"
+              - column:
+                  name: start_date
+                  valueDate: "2024-08-10"
+              - column:
+                  name: end_date
+                  valueDate: "2024-10-25"

@@ -13,6 +13,7 @@ import app.repository.TaskRepository;
 import app.service.comment.CommentService;
 import app.service.notification.NotificationService;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -61,6 +62,11 @@ public class TaskServiceImpl implements TaskService {
     public TaskResponseDto getById(Long id) {
         Task task = getTask(id);
         return taskMapper.toDto(task);
+    }
+
+    @Override
+    public Optional<Task> getTaskById(Long id) {
+        return taskRepository.findById(id);
     }
 
     @Transactional
