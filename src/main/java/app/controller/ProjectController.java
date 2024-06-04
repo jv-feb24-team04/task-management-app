@@ -35,9 +35,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProjectController {
     private final ProjectService projectService;
 
-    @Operation(summary = "Create a project",
-            description = "Create a new project")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Operation(summary = "Add project",
+            description = "Add a new project")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProjectResponseDto createProject(
@@ -46,9 +46,9 @@ public class ProjectController {
         return projectService.saveProject(projectDto);
     }
 
-    @Operation(summary = "Get all projects",
-            description = "Get all available projects with pagination and sorting")
     @PreAuthorize("hasRole('ROLE_USER')")
+    @Operation(summary = "Retrieve all projects",
+            description = "Retrieve all available projects")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ProjectResponseDto> getAllProjects(
@@ -59,9 +59,9 @@ public class ProjectController {
         return projectService.getAllProjects(pageable, user);
     }
 
-    @Operation(summary = "Get a specific project",
-            description = "Get a specific project by ID")
     @PreAuthorize("hasRole('ROLE_USER')")
+    @Operation(summary = "Retrieve project by its id",
+            description = "Retrieve all information about the project by its ID")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProjectResponseDto getProjectDetailsById(
@@ -71,9 +71,9 @@ public class ProjectController {
         return projectService.getProjectDetailsById(id, user);
     }
 
-    @Operation(summary = "Update a specific project",
-            description = "Update a specific project by ID")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Operation(summary = "Update project",
+            description = "Update the project by its unique identifier")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ProjectResponseDto updateProject(
@@ -84,9 +84,9 @@ public class ProjectController {
         return projectService.updateProject(id, projectDto, user);
     }
 
-    @Operation(summary = "Update a specific project status",
-            description = "Update a specific project status by ID")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @Operation(summary = "Update project status",
+            description = "Update the project status by its unique identifier")
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateStatus(

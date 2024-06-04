@@ -7,6 +7,7 @@ import app.dto.user.UserResponseDto;
 import app.exception.RegistrationException;
 import app.security.AuthenticationService;
 import app.service.user.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -25,12 +26,16 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/login")
+    @Operation(summary = "Login user",
+            description = "Login an existing user.")
     public UserLoginResponseDto login(@RequestBody UserLoginRequestDto loginRequestDto) {
         return authenticationService.authenticate(loginRequestDto);
     }
 
     @PostMapping("/registration")
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Register user",
+            description = "Register a new user")
     public UserResponseDto registerUser(@RequestBody @Valid UserRequestDto requestDto)
             throws RegistrationException {
         return userService.registerUser(requestDto);
