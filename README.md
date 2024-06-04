@@ -67,3 +67,6 @@ Creating this project, as it was a team effort, the biggest challenge was synchr
 ## 📈 Possible improvements 📈
 
 Overall, we are confident that this project covers all necessary functionality and is sufficiently convenient for integration. However, as always, there is room for growth. First and foremost, shortly, our plans include achieving maximum code coverage with tests, adding the ability to search for projects/tasks by partial name or other fields, as well as expanding the functionality of notifications via Telegram
+<div style="width:100%; text-align:center;">
+    <img src="images/readme_footer_image.gif" alt="Footer Image">
+</div>
