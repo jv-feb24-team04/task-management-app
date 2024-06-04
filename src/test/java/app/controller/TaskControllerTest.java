@@ -35,8 +35,8 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class TaskControllerTest {
-    private static final String PROJECT_ID_1 = "?projectId=1";
     protected static MockMvc mockMvc;
+    private static final String PROJECT_ID_1 = "?projectId=1";
     private static final String TASK_URL = "/api/tasks";
 
     @Autowired
