@@ -40,12 +40,7 @@ class TaskServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        taskService = new TaskServiceImpl(
-                taskRepository,
-                taskMapper,
-                projectRepository,
-                commentService,
-                notificationService);
+        taskService = new TaskServiceImpl(taskRepository, taskMapper, projectRepository, commentService, notificationService);
     }
 
     @Test
