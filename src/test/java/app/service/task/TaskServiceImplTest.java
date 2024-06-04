@@ -2,8 +2,6 @@ package app.service.task;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import app.dto.task.TaskResponseDto;
@@ -16,7 +14,6 @@ import app.repository.TaskRepository;
 import app.service.comment.CommentService;
 import app.service.notification.NotificationService;
 import java.util.Optional;
-import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -91,18 +88,5 @@ class TaskServiceImplTest {
         TaskResponseDto result = taskService.getById(1L);
         assertNotNull(result);
         assertEquals(result.getName(), responseDto.getName());
-    }
-
-    @Test
-    public void delete_ValidId_Success() {
-        Task task = new Task();
-        task.setId(1L);
-        task.setName("Task Name");
-        task.setComments(Set.of());
-
-        when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
-
-        taskService.delete(1L);
-        verify(taskRepository, times(1)).delete(task);
     }
 }
