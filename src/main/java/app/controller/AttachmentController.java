@@ -29,8 +29,8 @@ public class AttachmentController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = "multipart/form-data")
-    @Operation(summary = "Upload Attachment",
-            description = "Create a new attachment for a task identified by its ID")
+    @Operation(summary = "Add attachment",
+            description = "Add a new attachment for a task identified by its ID")
     public AttachmentResponseDto createAttachment(@RequestParam("filePath") String filePath,
                                                   @RequestParam("taskId") Long taskId,
                                                   Authentication authentication) {
@@ -39,8 +39,8 @@ public class AttachmentController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{id}")
-    @Operation(summary = "Get attachment by ID",
-            description = "Get all information about the attachment by ID")
+    @Operation(summary = "Retrieve attachment by its ID",
+            description = "Retrieve all information about the attachment by its ID")
     public AttachmentResponseDto getAttachmentById(@PathVariable Long id,
                                                    Authentication authentication) {
         return attachmentService.getById(id, getUserId(authentication));
@@ -48,8 +48,8 @@ public class AttachmentController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{id}/all")
-    @Operation(summary = "Retrieve All Attachments",
-            description = "Get all attachments associated with a task identified by its ID")
+    @Operation(summary = "Retrieve all attachments by Task Id",
+            description = "Retrieve all attachments associated with a task identified by its ID")
     public List<AttachmentResponseDto> getAllByTaskId(@PathVariable Long id,
                                                       Authentication authentication) {
         return attachmentService.getAllByTaskId(id, getUserId(authentication));
@@ -57,7 +57,7 @@ public class AttachmentController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete Attachment",
+    @Operation(summary = "Delete attachment",
             description = "Delete an attachment by its unique identifier")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAttachmentById(@PathVariable Long id,
@@ -68,7 +68,7 @@ public class AttachmentController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{id}/all")
     @Operation(
-            summary = "Delete All Attachments",
+            summary = "Delete all attachments",
             description = "Delete all attachments associated with a task identified by its ID"
     )
     public void deleteAllAttachmentsByTaskId(@PathVariable Long id,

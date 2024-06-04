@@ -26,7 +26,7 @@ public class AuthController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/login")
-    @Operation(summary = "Login User",
+    @Operation(summary = "Login user",
             description = "Login an existing user.")
     public UserLoginResponseDto login(@RequestBody UserLoginRequestDto loginRequestDto) {
         return authenticationService.authenticate(loginRequestDto);

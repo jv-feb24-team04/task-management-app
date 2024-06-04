@@ -31,8 +31,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProjectController {
     private final ProjectService projectService;
 
-    @Operation(summary = "Create a project",
-            description = "Create a new project")
+    @Operation(summary = "Add project",
+            description = "Add a new project")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ProjectResponseDto createProject(
@@ -41,8 +41,8 @@ public class ProjectController {
         return projectService.saveProject(projectDto);
     }
 
-    @Operation(summary = "Get all projects",
-            description = "Get all available projects with pagination and sorting")
+    @Operation(summary = "Retrieve all projects",
+            description = "Retrieve all available projects")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ProjectResponseDto> getAllProjects(
@@ -52,8 +52,8 @@ public class ProjectController {
         return projectService.getAllProjects(pageable);
     }
 
-    @Operation(summary = "Get a specific project",
-            description = "Get a specific project by ID")
+    @Operation(summary = "Retrieve project by its id",
+            description = "Retrieve all information about the project by its ID")
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ProjectResponseDto getProjectDetailsById(
@@ -62,8 +62,8 @@ public class ProjectController {
         return projectService.getProjectDetailsById(id);
     }
 
-    @Operation(summary = "Update a specific project",
-            description = "Update a specific project by ID")
+    @Operation(summary = "Update project",
+            description = "Update the project by its unique identifier")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public ProjectResponseDto updateProject(
@@ -73,8 +73,8 @@ public class ProjectController {
         return projectService.updateProject(id, projectDto);
     }
 
-    @Operation(summary = "Update a specific project status",
-            description = "Update a specific project status by ID")
+    @Operation(summary = "Update project status",
+            description = "Update the project status by its unique identifier")
     @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     public void updateStatus(

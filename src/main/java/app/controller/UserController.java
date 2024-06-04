@@ -25,8 +25,8 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/{id}/role")
-    @Operation(summary = "Update User Role",
-            description = "Update the role of a user identified by their ID")
+    @Operation(summary = "Update user role",
+            description = "Update the user role by its unique identifier")
     public void updateUserRole(@PathVariable Long id,
                                @RequestBody UserUpdateRoleDto updateRoleDto) {
         userService.updateUserRole(id, updateRoleDto);
@@ -34,15 +34,15 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/me")
-    @Operation(summary = "Get User Information",
-            description = "Retrieve information about the currently authenticated user")
+    @Operation(summary = "Retrieve authenticated user",
+            description = "Retrieve all information about the currently authenticated user")
     public UserResponseDto getUserInfo(@AuthenticationPrincipal User user) {
         return userService.getUserInfo(user);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping("/me")
-    @Operation(summary = "Update User Information",
+    @Operation(summary = "Update user",
             description = "Update information for the currently authenticated user")
     public UserResponseDto updateUserInfo(@AuthenticationPrincipal User user,
                                           @RequestBody UserUpdateInfoDto updateInfoDto) {
