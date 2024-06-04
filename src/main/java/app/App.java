@@ -28,7 +28,7 @@ public class App {
 
         try {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
-           botsApi.registerBot(telegramBot);
+            botsApi.registerBot(telegramBot);
         } catch (TelegramApiException e) {
             throw new TelegramBotInitializationException("Failed to initialize Telegram Bot.", e);
         }
