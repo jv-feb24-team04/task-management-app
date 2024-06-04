@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,5 +43,5 @@ public class Project {
     private ProjectStatus projectStatus = ProjectStatus.INITIATED;
 
     @OneToMany(mappedBy = "project")
-    private Set<Task> tasks;
+    private Set<Task> tasks = new HashSet<>();
 }

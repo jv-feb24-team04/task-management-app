@@ -12,6 +12,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaskController {
     private final TaskService taskService;
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     @Operation(summary = "Add task",
@@ -42,6 +44,8 @@ public class TaskController {
         return taskService.save(requestDto, projectId);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
+    @ResponseStatus(HttpStatus.ACCEPTED)
     @GetMapping
     @Operation(summary = "Retrieve all tasks by user ID",
             description = "Retrieve all tasks associated with a project identified by its ID")
@@ -52,6 +56,7 @@ public class TaskController {
         return taskService.getAllByProjectId(projectId, pageable);
     }
 
+    @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{id}")
     @Operation(summary = "Retrieve task by its ID",
             description = "Retrieve all information about the task by its ID")
@@ -59,6 +64,7 @@ public class TaskController {
         return taskService.getById(id);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
     @Operation(summary = "Update task",
             description = "Update information about the task by its ID")
@@ -69,6 +75,7 @@ public class TaskController {
         return taskService.updateTask(id, requestDto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete task",
