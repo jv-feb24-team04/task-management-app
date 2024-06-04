@@ -12,6 +12,7 @@ import app.model.TaskStatus;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Connection;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -34,6 +35,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class TaskControllerTest {
+    private static final String PROJECT_ID_1 = "?projectId=1";
     protected static MockMvc mockMvc;
     private static final String TASK_URL = "/api/tasks";
 
@@ -87,9 +89,11 @@ class TaskControllerTest {
         addUser.setComments(Set.of());
         addUser.setLabels(List.of());
 
-        List<TaskResponseDto> expected = List.of(configureRepo, addUser);
+        List<TaskResponseDto> expected = new ArrayList<>();
+        expected.add(configureRepo);
+        expected.add(addUser);
 
-        MvcResult result = mockMvc.perform(get(TASK_URL + "?projectId=1")
+        MvcResult result = mockMvc.perform(get(TASK_URL + PROJECT_ID_1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
