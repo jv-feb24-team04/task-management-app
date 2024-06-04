@@ -45,13 +45,13 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void updateUserRole(Long userId, UserUpdateRoleDto updateRoleDto) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-        long roleId = 1L;
-        if ((updateRoleDto.getRole()).equals("ADMIN")) {
-            roleId = 2L;
+                .orElseThrow(() -> new EntityNotFoundException("User not found with Id: "
+                        + userId));
+
+        if (roleRepository.findByRole(Role.RoleName.valueOf(updateRoleDto.getRole())) == null) {
+            throw new EntityNotFoundException("Role " + updateRoleDto.getRole() + " not found");
         }
-        Role role = roleRepository.findById(roleId)
-                .orElseThrow(() -> new RuntimeException("Role not found"));
+        Role role = roleRepository.findByRole(Role.RoleName.valueOf(updateRoleDto.getRole()));
 
         user.getRoles().add(role);
         userRepository.save(user);
@@ -64,8 +64,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDto updateUserInfo(User user, UserUpdateInfoDto updateInfoDto) {
-        if (user == null) {
-            throw new RuntimeException("User with username not found.");
+        if (!userRepository.existsById(user.getId())) {
+            throw new EntityNotFoundException("Can`t find a user with id: " + user.getId());
         }
 
         user.setFirstName(updateInfoDto.getFirstName());
