@@ -39,7 +39,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     @Override
     public AttachmentResponseDto getById(Long attachmentId) {
         Attachment attachment = attachmentRepository.findById(attachmentId).orElseThrow(()
-                -> new EntityNotFoundException("Can't find attachment by id: " + attachmentId));
+                -> new EntityNotFoundException("Failed to find Attachment by id=" + attachmentId));
         return mapToDtoAndSetFileLink(attachment);
     }
 
@@ -50,7 +50,7 @@ public class AttachmentServiceImpl implements AttachmentService {
                     .map(this::mapToDtoAndSetFileLink)
                     .toList();
         }
-        throw new EntityNotFoundException("Can't find any attachment by task id: " + taskId);
+        throw new EntityNotFoundException("Failed to find Attachment by id=" + taskId);
     }
 
     @Override
@@ -78,14 +78,14 @@ public class AttachmentServiceImpl implements AttachmentService {
 
     private String getDropBoxFileId(Long attachmentId) {
         Attachment attachment = attachmentRepository.findById(attachmentId).orElseThrow(()
-                -> new EntityNotFoundException("Can't find attachment by id: " + attachmentId));
+                -> new EntityNotFoundException("Failed to find Attachment by id=" + attachmentId));
         return attachment.getDropboxFileId();
     }
 
     private Attachment saveNewAttachment(String filePath, Long taskId) {
         Attachment attachment = new Attachment();
         attachment.setTask(taskRepository.findById(taskId).orElseThrow(()
-                        -> new EntityNotFoundException("Can't find task by id: " + taskId)));
+                        -> new EntityNotFoundException("Failed to find Task by id=" + taskId)));
         attachment.setDropboxFileId(dropboxService.uploadFile(filePath, taskId));
         attachment.setFileName(getFileName(filePath));
         attachment.setUploadDate(LocalDateTime.now());

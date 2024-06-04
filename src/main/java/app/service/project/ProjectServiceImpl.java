@@ -1,4 +1,4 @@
-package app.service.project.impl;
+package app.service.project;
 
 import app.dto.project.ProjectRequestDto;
 import app.dto.project.ProjectResponseDto;
@@ -7,7 +7,6 @@ import app.exception.EntityNotFoundException;
 import app.mapper.ProjectMapper;
 import app.model.Project;
 import app.repository.ProjectRepository;
-import app.service.project.ProjectService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
@@ -18,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 public class ProjectServiceImpl implements ProjectService {
-    private static final String PROJECT_NOT_FOUND_ERROR_MESSAGE = "Project with id %s not found";
+    private static final String PROJECT_NOT_FOUND_ERROR_MESSAGE = "Failed to find Project by id=%s";
 
     private final ProjectMapper projectMapper;
     private final ProjectRepository projectRepository;

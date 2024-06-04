@@ -32,11 +32,11 @@ public class CommentServiceImpl implements CommentService {
     ) {
         User user = userRepository.findById(userId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException("Can not find user by id: " + userId));
+                        () -> new EntityNotFoundException("Failed to find User by id=" + userId));
 
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException("Can not find task by id: " + taskId));
+                        () -> new EntityNotFoundException("Failed to find Task by id=" + taskId));
 
         Comment comment = commentMapper.toEntity(commentRequestDto);
         comment.setUser(user);
@@ -50,7 +50,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentResponseDto> getByUserId(Long userId, Pageable pageable) {
         if (!userRepository.existsById(userId)) {
-            throw new EntityNotFoundException("Can not find user with ID: " + userId);
+            throw new EntityNotFoundException("Failed to find User by id=" + userId);
         }
         return commentRepository.getAllByUserId(userId, pageable)
                 .stream()
@@ -61,7 +61,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public List<CommentResponseDto> getByTaskId(Long taskId, Pageable pageable) {
         if (!taskRepository.existsById(taskId)) {
-            throw new EntityNotFoundException("Can not find task with ID: " + taskId);
+            throw new EntityNotFoundException("Failed to find Task by id=" + taskId);
         }
         return commentRepository.getAllByTaskId(taskId, pageable)
                 .stream()
@@ -88,7 +88,7 @@ public class CommentServiceImpl implements CommentService {
     private Comment getCommentById(Long commentId) {
         return commentRepository.findById(commentId)
                 .orElseThrow(() -> new EntityNotFoundException(
-                        "Cannot find comment by id: " + commentId)
+                        "Failed to find Comment by id=" + commentId)
                 );
     }
 }

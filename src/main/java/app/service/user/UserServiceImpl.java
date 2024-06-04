@@ -44,8 +44,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public void updateUserRole(Long userId, UserUpdateRoleDto updateRoleDto) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new EntityNotFoundException("User not found with Id: "
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new EntityNotFoundException("Failed to find User by id="
                         + userId));
 
         if (roleRepository.findByRole(Role.RoleName.valueOf(updateRoleDto.getRole())) == null) {
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto updateUserInfo(User user, UserUpdateInfoDto updateInfoDto) {
         if (!userRepository.existsById(user.getId())) {
-            throw new EntityNotFoundException("Can`t find a user with id: " + user.getId());
+            throw new EntityNotFoundException("Failed to find User by id=" + user.getId());
         }
 
         user.setFirstName(updateInfoDto.getFirstName());
@@ -98,6 +98,6 @@ public class UserServiceImpl implements UserService {
         if (optionalUser.isPresent()) {
             return optionalUser.get().getChatId();
         }
-        throw new EntityNotFoundException("Failed to get user by id=" + id);
+        throw new EntityNotFoundException("Failed to find User by id=" + id);
     }
 }
