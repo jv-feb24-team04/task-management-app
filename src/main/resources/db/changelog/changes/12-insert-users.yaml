@@ -28,6 +28,15 @@ databaseChangeLog:
                   name: role_id
                   valueComputed: (SELECT id FROM roles WHERE role = 'ADMIN')
         - insert:
+            tableName: users_roles
+            columns:
+              - column:
+                  name: user_id
+                  valueComputed: (SELECT id FROM users WHERE email = 'admin@gmail.com')
+              - column:
+                  name: role_id
+                  valueComputed: (SELECT id FROM roles WHERE role = 'USER')
+        - insert:
             tableName: users
             columns:
               - column:
