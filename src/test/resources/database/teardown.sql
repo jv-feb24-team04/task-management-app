@@ -1,3 +1,0 @@
-DELETE FROM tasks;
-DELETE FROM users;
-DELETE FROM projects;

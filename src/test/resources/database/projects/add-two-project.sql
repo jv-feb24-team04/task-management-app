@@ -1,2 +1,0 @@
-INSERT INTO projects (id, name, description, start_date, end_date, project_status) VALUES (1, "Trello", "Task management app", "2024-06-15", "2024-10-01", INITIATED);
-INSERT INTO projects (id, name, description, start_date, end_date, project_status) VALUES (2, "Car rental", "Car rental app", "2024-05-24", "2024-09-12", INITIATED);
