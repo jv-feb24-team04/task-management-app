@@ -1,0 +1,32 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-comments
+      author: vlasenko_yevhenii
+      changes:
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "High priority label"
+              - column:
+                  name: color
+                  value: red
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "Low priority label"
+              - column:
+                  name: color
+                  value: green
+        - insert:
+            tableName: labels
+            columns:
+              - column:
+                  name: name
+                  value: "Default label"
+              - column:
+                  name: color
+                  value: gray
