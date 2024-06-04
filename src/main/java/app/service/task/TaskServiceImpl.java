@@ -78,9 +78,9 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(Long id, Long userId) {
         Task task = getTask(id);
-        task.getComments().forEach(comment -> commentService.delete(comment.getId()));
+        task.getComments().forEach(comment -> commentService.delete(comment.getId(), userId));
         taskRepository.delete(task);
     }
 

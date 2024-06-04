@@ -3,6 +3,7 @@ package app.controller;
 import app.dto.task.CreateTaskRequestDto;
 import app.dto.task.TaskResponseDto;
 import app.dto.task.UpdateTaskRequestDto;
+import app.model.User;
 import app.service.task.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -11,6 +12,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,7 +73,10 @@ public class TaskController {
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete a task by ID",
             description = "Delete a task by ID, if there is one")
-    public void deleteTask(@PathVariable Long id) {
-        taskService.delete(id);
+    public void deleteTask(
+            @AuthenticationPrincipal User user,
+            @PathVariable Long id
+    ) {
+        taskService.delete(id, user.getId());
     }
 }

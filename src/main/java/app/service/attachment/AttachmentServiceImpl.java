@@ -85,7 +85,7 @@ public class AttachmentServiceImpl implements AttachmentService {
     private Attachment saveNewAttachment(String filePath, Long taskId) {
         Attachment attachment = new Attachment();
         attachment.setTask(taskRepository.findById(taskId).orElseThrow(()
-                        -> new EntityNotFoundException("Failed to find Task by id=" + taskId)));
+                -> new EntityNotFoundException("Failed to find Task by id=" + taskId)));
         attachment.setDropboxFileId(dropboxService.uploadFile(filePath, taskId));
         attachment.setFileName(getFileName(filePath));
         attachment.setUploadDate(LocalDateTime.now());

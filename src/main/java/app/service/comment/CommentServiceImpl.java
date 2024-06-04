@@ -12,6 +12,7 @@ import app.repository.TaskRepository;
 import app.repository.UserRepository;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -70,25 +71,36 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentResponseDto update(Long commentId, CommentRequestDto commentRequestDto) {
-        Comment comment = getCommentById(commentId);
+    public CommentResponseDto update(
+            Long commentId,
+            CommentRequestDto commentRequestDto,
+            Long userId
+    ) {
+        Optional<Comment> commentOptional = getUserComment(commentId, userId);
 
-        comment.setText(commentRequestDto.getText());
-        comment.setLastEdit(LocalDateTime.now());
+        if (commentOptional.isPresent()) {
+            Comment comment = commentOptional.get();
+            comment.setText(commentRequestDto.getText());
+            comment.setLastEdit(LocalDateTime.now());
 
-        return commentMapper.toDto(commentRepository.save(comment));
+            return commentMapper.toDto(commentRepository.save(comment));
+        } else {
+            throw new RuntimeException("Comment not found for this user");
+        }
     }
 
     @Override
-    public void delete(Long commentId) {
-        Comment comment = getCommentById(commentId);
-        commentRepository.delete(comment);
+    public void delete(Long commentId, Long userId) {
+        Optional<Comment> commentOptional = getUserComment(commentId, userId);
+
+        if (commentOptional.isPresent()) {
+            commentRepository.delete(commentOptional.get());
+        } else {
+            throw new RuntimeException("Comment not found for this user");
+        }
     }
 
-    private Comment getCommentById(Long commentId) {
-        return commentRepository.findById(commentId)
-                .orElseThrow(() -> new EntityNotFoundException(
-                        "Failed to find Comment by id=" + commentId)
-                );
+    private Optional<Comment> getUserComment(Long commentId, Long userId) {
+        return commentRepository.findByIdAndUserId(commentId, userId);
     }
 }

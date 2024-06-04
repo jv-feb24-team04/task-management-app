@@ -13,6 +13,6 @@ public interface LabelRepository extends JpaRepository<Label, Long> {
     Set<Label> findAllByTaskId(@Param("taskId") Long taskId);
 
     @Query("SELECT DISTINCT l FROM Label l JOIN FETCH l.tasks t "
-                + "JOIN FETCH t.project p WHERE p.id = :projectId")
+            + "JOIN FETCH t.project p WHERE p.id = :projectId")
     Set<Label> findAllByProjectId(@Param("projectId") Long projectId);
 }

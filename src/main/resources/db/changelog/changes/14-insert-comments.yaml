@@ -1,0 +1,41 @@
+databaseChangeLog:
+  - changeSet:
+      id: insert-comments
+      author: fakhrutdinov-eduard
+      changes:
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: task_id
+                  value: 1
+              - column:
+                  name: user_id
+                  value: 1
+              - column:
+                  name: text
+                  value: "FIRST comment: add space lines"
+              - column:
+                  name: time_stamp
+                  valueDate: "2024-06-05T00:00:00.000"
+              - column:
+                  name: last_edit
+                  valueDate: "2024-06-05T00:00:00.000"
+        - insert:
+            tableName: comments
+            columns:
+              - column:
+                  name: task_id
+                  value: 2
+              - column:
+                  name: user_id
+                  value: 2
+              - column:
+                  name: text
+                  value: "FIRST comment: add checking for add method"
+              - column:
+                  name: time_stamp
+                  valueDate: "2024-06-04T00:00:01.000"
+              - column:
+                  name: last_edit
+                  valueDate: "2024-06-04T00:00:01.000"
