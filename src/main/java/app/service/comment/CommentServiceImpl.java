@@ -76,31 +76,22 @@ public class CommentServiceImpl implements CommentService {
             CommentRequestDto commentRequestDto,
             Long userId
     ) {
-        Optional<Comment> commentOptional = getUserComment(commentId, userId);
+        Comment comment = getUserCommentOrThrow(commentId, userId);
 
-        if (commentOptional.isPresent()) {
-            Comment comment = commentOptional.get();
-            comment.setText(commentRequestDto.getText());
-            comment.setLastEdit(LocalDateTime.now());
+        comment.setText(commentRequestDto.getText());
+        comment.setLastEdit(LocalDateTime.now());
 
-            return commentMapper.toDto(commentRepository.save(comment));
-        } else {
-            throw new RuntimeException("Comment not found for this user");
-        }
+        return commentMapper.toDto(commentRepository.save(comment));
     }
 
     @Override
     public void delete(Long commentId, Long userId) {
-        Optional<Comment> commentOptional = getUserComment(commentId, userId);
-
-        if (commentOptional.isPresent()) {
-            commentRepository.delete(commentOptional.get());
-        } else {
-            throw new RuntimeException("Comment not found for this user");
-        }
+        Comment comment = getUserCommentOrThrow(commentId, userId);
+        commentRepository.delete(comment);
     }
 
-    private Optional<Comment> getUserComment(Long commentId, Long userId) {
-        return commentRepository.findByIdAndUserId(commentId, userId);
+    private Comment getUserCommentOrThrow(Long commentId, Long userId) {
+        return commentRepository.findByIdAndUserId(commentId, userId)
+                .orElseThrow(() -> new EntityNotFoundException("Comment not found for this user"));
     }
 }

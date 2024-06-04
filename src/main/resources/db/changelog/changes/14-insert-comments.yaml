@@ -8,10 +8,10 @@ databaseChangeLog:
             columns:
               - column:
                   name: task_id
-                  value: 1
+                  valueComputed: (SELECT id FROM tasks WHERE name = 'TASK 1')
               - column:
                   name: user_id
-                  value: 1
+                  valueComputed: (SELECT id FROM users WHERE email = 'admin@gmail.com')
               - column:
                   name: text
                   value: "FIRST comment: add space lines"
@@ -26,10 +26,10 @@ databaseChangeLog:
             columns:
               - column:
                   name: task_id
-                  value: 2
+                  valueComputed: (SELECT id FROM tasks WHERE name = 'TASK 2')
               - column:
                   name: user_id
-                  value: 2
+                  valueComputed: (SELECT id FROM users WHERE email = 'user@gmail.com')
               - column:
                   name: text
                   value: "FIRST comment: add checking for add method"
