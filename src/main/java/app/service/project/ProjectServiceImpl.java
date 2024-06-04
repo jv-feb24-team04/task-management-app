@@ -6,6 +6,7 @@ import app.dto.project.ProjectStatusDto;
 import app.exception.EntityNotFoundException;
 import app.mapper.ProjectMapper;
 import app.model.Project;
+import app.model.User;
 import app.repository.ProjectRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -30,23 +31,25 @@ public class ProjectServiceImpl implements ProjectService {
     }
 
     @Override
-    public List<ProjectResponseDto> getAllProjects(Pageable pageable) {
-        return projectRepository.findAllProjects(pageable).stream()
+    public List<ProjectResponseDto> getAllProjects(Pageable pageable, User user) {
+        return projectRepository.findAllProjectsByIdAndUser(pageable, user).stream()
                 .map(projectMapper::toDto)
                 .toList();
     }
 
     @Override
-    public ProjectResponseDto getProjectDetailsById(Long projectId) {
-        return projectMapper.toDto(projectRepository.findProjectById(projectId)
+    public ProjectResponseDto getProjectDetailsById(Long projectId, User user) {
+        return projectMapper.toDto(projectRepository.findProjectByIdAndUser(projectId, user)
                 .orElseThrow(() -> new EntityNotFoundException(
                         String.format(PROJECT_NOT_FOUND_ERROR_MESSAGE, projectId))));
     }
 
     @Override
     @Transactional
-    public ProjectResponseDto updateProject(Long projectId, ProjectRequestDto projectDto) {
-        Project projectFromDb = projectRepository.findProjectById(projectId)
+    public ProjectResponseDto updateProject(Long projectId,
+                                            ProjectRequestDto projectDto,
+                                            User user) {
+        Project projectFromDb = projectRepository.findProjectByIdAndUser(projectId, user)
                 .orElseThrow(() -> new EntityNotFoundException(
                         String.format(PROJECT_NOT_FOUND_ERROR_MESSAGE, projectId)));
         BeanUtils.copyProperties(projectDto, projectFromDb);
@@ -55,9 +58,17 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     @Transactional
-    public void updateProjectStatus(Long id, ProjectStatusDto statusDto) {
+    public void updateProjectStatus(Long id, ProjectStatusDto statusDto, User user) {
         if (projectRepository.updateProjectStatusById(id, statusDto.projectStatus()) < 1) {
             throw new EntityNotFoundException(String.format(PROJECT_NOT_FOUND_ERROR_MESSAGE, id));
         }
+    }
+
+    @Override
+    public void deleteProject(Long id, User user) {
+        if (projectRepository.findProjectByIdAndUser(id, user).isEmpty()) {
+            throw new EntityNotFoundException(String.format(PROJECT_NOT_FOUND_ERROR_MESSAGE, id));
+        }
+        projectRepository.deleteById(id);
     }
 }
