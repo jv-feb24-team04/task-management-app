@@ -2,7 +2,6 @@ package app.mapper;
 
 import app.config.MapperConfig;
 import app.dto.task.CreateTaskRequestDto;
-import app.dto.task.TaskDtoWithoutLabelsAndComments;
 import app.dto.task.TaskResponseDto;
 import app.dto.task.UpdateTaskRequestDto;
 import app.model.Task;
@@ -16,10 +15,6 @@ public interface TaskMapper {
 
     @Mapping(target = "assignee.id", source = "assigneeId")
     Task toModelUpdate(UpdateTaskRequestDto requestDto);
-
-    @Mapping(target = "projectId", source = "project.id")
-    @Mapping(target = "assigneeId", source = "assignee.id")
-    TaskDtoWithoutLabelsAndComments toDtoWithoutLabelsAndComments(Task task);
 
     @Mapping(target = "projectId", source = "project.id")
     @Mapping(target = "assigneeId", source = "assignee.id")
