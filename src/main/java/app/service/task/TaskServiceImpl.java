@@ -81,7 +81,7 @@ public class TaskServiceImpl implements TaskService {
     public void delete(Long id) {
         Task task = getTask(id);
         task.getComments().forEach(comment -> commentService.delete(comment.getId()));
-        taskRepository.deleteById(task.getId());
+        taskRepository.delete(task);
     }
 
     private Task getTask(Long id) {

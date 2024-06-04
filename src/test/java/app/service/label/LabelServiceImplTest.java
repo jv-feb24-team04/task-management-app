@@ -2,6 +2,8 @@ package app.service.label;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import app.dto.label.LabelRequestDto;
@@ -108,5 +110,17 @@ class LabelServiceImplTest {
         LabelResponseDto result = labelService.update(1L, requestDto);
         assertNotNull(result);
         assertEquals(responseDto.getName(), result.getName());
+    }
+
+    @Test
+    public void delete_ValidId_Success() {
+        Label label = new Label();
+        label.setId(1L);
+        label.setName("Label Name");
+
+        when(labelRepository.findById(1L)).thenReturn(Optional.of(label));
+
+        labelService.delete(1L);
+        verify(labelRepository, times(1)).delete(label);
     }
 }

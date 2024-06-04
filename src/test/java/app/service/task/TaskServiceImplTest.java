@@ -73,6 +73,6 @@ class TaskServiceImplTest {
         when(taskRepository.findById(1L)).thenReturn(Optional.of(task));
 
         taskService.delete(1L);
-        verify(taskRepository, times(1)).deleteById(1L);
+        verify(taskRepository, times(1)).delete(task);
     }
 }
