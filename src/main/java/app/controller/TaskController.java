@@ -32,11 +32,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class TaskController {
     private final TaskService taskService;
 
-    @Operation(summary = "Create a new task",
-            description = "Create a new task for a project with project ID")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping
+    @Operation(summary = "Add task",
+            description = "Add a new task for a project identified by its ID")
     public TaskResponseDto createTask(
             @RequestParam Long projectId,
             @RequestBody @Valid CreateTaskRequestDto requestDto) {
@@ -44,11 +44,11 @@ public class TaskController {
         return taskService.save(requestDto, projectId);
     }
 
-    @Operation(summary = "Get all tasks",
-            description = "Get all tasks by project ID")
     @PreAuthorize("hasRole('ROLE_USER')")
-    @GetMapping
     @ResponseStatus(HttpStatus.ACCEPTED)
+    @GetMapping
+    @Operation(summary = "Retrieve all tasks by user ID",
+            description = "Retrieve all tasks associated with a project identified by its ID")
     public List<TaskResponseDto> getAllByProjectId(
             @RequestParam Long projectId,
             Pageable pageable) {
@@ -56,18 +56,18 @@ public class TaskController {
         return taskService.getAllByProjectId(projectId, pageable);
     }
 
-    @Operation(summary = "Get task by ID",
-            description = "Get all information about the task by ID")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{id}")
+    @Operation(summary = "Retrieve task by its ID",
+            description = "Retrieve all information about the task by its ID")
     public TaskResponseDto getTaskById(@PathVariable Long id) {
         return taskService.getById(id);
     }
 
-    @Operation(summary = "Update task by ID",
-            description = "Update all information about the task by ID")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/{id}")
+    @Operation(summary = "Update task",
+            description = "Update information about the task by its ID")
     public TaskResponseDto updateTask(
             @PathVariable Long id,
             @RequestBody @Valid UpdateTaskRequestDto requestDto) {
@@ -75,11 +75,12 @@ public class TaskController {
         return taskService.updateTask(id, requestDto);
     }
 
-    @Operation(summary = "Delete a task by ID",
-            description = "Delete a task by ID, if there is one")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @DeleteMapping("/{id}")
+=======
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Delete task",
+            description = "Delete a task by its unique identifier")
     public void deleteTask(
             @AuthenticationPrincipal User user,
             @PathVariable Long id

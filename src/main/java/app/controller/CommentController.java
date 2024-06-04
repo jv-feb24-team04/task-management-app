@@ -34,8 +34,8 @@ public class CommentController {
     @PostMapping("/{taskId}")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
-            summary = "Add a new comment",
-            description = "Add a new comment to a task by a user"
+            summary = "Add comment",
+            description = "Add a new comment for a task identified by its ID and user id"
     )
     public CommentResponseDto save(
             @AuthenticationPrincipal User user,
@@ -49,8 +49,8 @@ public class CommentController {
     @GetMapping("/{taskId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(
-            summary = "Retrieve comments by task ID",
-            description = "Retrieve comments associated with a specific task"
+            summary = "Retrieve all comments by task Id",
+            description = "Retrieve all comments associated with a task identified by its ID"
     )
     public List<CommentResponseDto> getCommentsByTaskId(
             @PathVariable Long taskId,
@@ -63,8 +63,8 @@ public class CommentController {
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
     @Operation(
-            summary = "Retrieve comments by user ID",
-            description = "Retrieve comments made by a specific user"
+            summary = "Retrieve all comments by user ID",
+            description = "Retrieve all comments associated with a user identified by its ID"
     )
     public List<CommentResponseDto> getCommentsByUserId(
             @AuthenticationPrincipal User user,
@@ -77,8 +77,9 @@ public class CommentController {
     @PutMapping("/{commentId}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(
-            summary = "Update a comment",
-            description = "Update the text of an existing comment"
+            summary = "Update comment",
+            description = "Update the text of an existing comment by associated"
+                    + " with a task and user identified by their ID"
     )
     public CommentResponseDto updateComment(
             @PathVariable Long commentId,
@@ -92,8 +93,8 @@ public class CommentController {
     @DeleteMapping("/{commentId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(
-            summary = "Delete a comment",
-            description = "Delete an existing comment by its ID"
+            summary = "Delete comment",
+            description = "Delete a comment by its unique identifier"
     )
     public void deleteComment(
             @AuthenticationPrincipal User user,
