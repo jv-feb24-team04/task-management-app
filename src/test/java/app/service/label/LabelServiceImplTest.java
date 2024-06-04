@@ -68,4 +68,23 @@ class LabelServiceImplTest {
         assertNotNull(result);
         assertEquals(result.size(), 1);
     }
+
+    @Test
+    public void getAllByTaskId_ValidTaskId_ReturnsSetOfLabelResponseDto() {
+        Label label = new Label();
+        label.setName("Label Name");
+        Set<Label> labels = Set.of(label);
+
+        LabelResponseDto responseDto = new LabelResponseDto();
+        responseDto.setName("Label Name");
+        Set<LabelResponseDto> responseDtos = Set.of(responseDto);
+
+        when(labelRepository.findAllByTaskId(1L))
+                .thenReturn(labels);
+        when(labelMapper.toDtoSet(labels)).thenReturn(responseDtos);
+
+        Set<LabelResponseDto> result = labelService.getAllByTaskId(1L);
+        assertNotNull(result);
+        assertEquals(result.size(), 1);
+    }
 }
