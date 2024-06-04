@@ -5,7 +5,7 @@ import app.dto.label.LabelResponseDto;
 import java.util.Set;
 
 public interface LabelService {
-    LabelResponseDto create(LabelRequestDto dto);
+    LabelResponseDto create(LabelRequestDto dto, Long taskId);
 
     Set<LabelResponseDto> getAllForProject(Long projectId);
 

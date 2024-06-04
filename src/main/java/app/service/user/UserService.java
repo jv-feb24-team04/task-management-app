@@ -21,4 +21,6 @@ public interface UserService {
     UserResponseDto registerUser(UserRequestDto userRequestDto) throws RegistrationException;
 
     String getUserChatId(Long id);
+
+    void deleteUserById(Long userId);
 }
