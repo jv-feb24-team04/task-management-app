@@ -29,8 +29,8 @@ public class AttachmentController {
     @PreAuthorize("hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = "multipart/form-data")
-    @Operation(summary = "Create a new attachment",
-            description = "Create a new attachment for a task with task ID")
+    @Operation(summary = "Upload Attachment",
+            description = "Create a new attachment for a task identified by its ID")
     public AttachmentResponseDto createAttachment(@RequestParam("filePath") String filePath,
                                                   @RequestParam("taskId") Long taskId,
                                                   Authentication authentication) {
@@ -48,8 +48,8 @@ public class AttachmentController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/{id}/all")
-    @Operation(summary = "Get all attachments",
-            description = "Get all attachments by task ID")
+    @Operation(summary = "Retrieve All Attachments",
+            description = "Get all attachments associated with a task identified by its ID")
     public List<AttachmentResponseDto> getAllByTaskId(@PathVariable Long id,
                                                       Authentication authentication) {
         return attachmentService.getAllByTaskId(id, getUserId(authentication));
@@ -57,8 +57,8 @@ public class AttachmentController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{id}")
-    @Operation(summary = "Delete an attachment by ID",
-            description = "Delete an attachment by ID")
+    @Operation(summary = "Delete Attachment",
+            description = "Delete an attachment by its unique identifier")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAttachmentById(@PathVariable Long id,
                                      Authentication authentication) {
@@ -67,9 +67,10 @@ public class AttachmentController {
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/{id}/all")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Delete all attachments by task ID",
-            description = "Delete all attachments by task ID")
+    @Operation(
+            summary = "Delete All Attachments",
+            description = "Delete all attachments associated with a task identified by its ID"
+    )
     public void deleteAllAttachmentsByTaskId(@PathVariable Long id,
                                              Authentication authentication) {
         attachmentService.deleteAllByTaskId(id, getUserId(authentication));
