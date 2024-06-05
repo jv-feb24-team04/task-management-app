@@ -100,7 +100,8 @@ public class ProjectController {
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @Operation(summary = "Delete the project by id", description = "Delete a book by id if exist")
+    @Operation(summary = "Delete project",
+            description = "Delete a project by its unique identifier")
     public void deleteProjectById(
             @PathVariable @Parameter(description = "Project ID") Long id,
             @AuthenticationPrincipal User user
