@@ -1,242 +1,72 @@
-# Task Management System
+# TASK MANAGEMENT SYSTEM
 
-Manage tasks and projects effectively through a web-based application. This system enables task creation, assignment, progress tracking, and completion.
+## 👋 Introduction 👋
+
+This is a simple and convenient app for managing tasks through projects. It lets users create and follow up on task progress with integrated notifications via Telegram messenger.
+
+## 👩‍💻Technology Stack 👩‍💻
+- Programming Language: Java
+- Application Configuration: Spring Boot, Spring, Maven
+- Accessing Data Spring Data: JPA, Hibernate, MySQL, PostgreSQL
+- Web Development: Spring MVC, Servlets, JSP, Tomcat
+- Testing and Documentation: JUnit, Mockito, Swagger, TestContainers
+- Version Control: Git
+- Infrastructure: Docker
+- Database migration: Liquibase
 
 
-## If you work in a team
+## 🚀 Functionality 🚀
+**click the description to try out the request in Postman**
+### 1. **Authentication Controller**:
+- `POST api/auth/registration` - [register a new user](https://www.postman.com/descent-module-candidate-79416993/workspace/task-management-system/request/31607463-4e280d43-6050-424c-adb9-893af6571985?action=share&creator=31607463&ctx=documentation)
+- `POST api/auth/login` - [user login](https://www.postman.com/descent-module-candidate-79416993/workspace/task-management-system/request/31607463-317053c5-d9ae-48e8-8564-66d9690301cc?action=share&creator=31607463&ctx=documentation)
 
-1. Create an organization on GitHub
-   ![Create an organization](./description/create-an-organization.png)
-2. Choose a `Free` plan
-3. Use a name like `fe-feb20-team0` (your group + your team name)
-4. It should belong to your personal account
-   ![Set up your team](./description/set-up-your-team.png)
-5. Add your teammates to the team by their usernames on Github
-   ![Add your teammate](./description/add-your-teammate.png)
+### 2. **User Controller**:
+- `GET api/users/me` - [get user info](https://www.postman.com/descent-module-candidate-79416993/workspace/task-management-system/request/31607463-20d0bf55-310a-47c5-a97b-b0251ea41013?action=share&creator=31607463&ctx=documentation)
+- `PUT api/users/me` - [update user info](https://www.postman.com/descent-module-candidate-79416993/workspace/task-management-system/request/31607463-ba1f5558-c171-4112-b1aa-1af63dc396a2?action=share&creator=31607463&ctx=documentation)
+- `PUT api/users/{id}/role` - [update user's role](https://www.postman.com/descent-module-candidate-79416993/workspace/task-management-system/request/31607463-20d0bf55-310a-47c5-a97b-b0251ea41013?action=share&creator=31607463&ctx=documentation)
 
-## Instructions
+### 3. **Project Controller**:
+- `POST api/projects` -[create a new project](https://www.postman.com/descent-module-candidate-79416993/workspace/task-management-system/request/31607463-1de87c65-065c-4f8c-b6ca-24a000dff706?action=share&creator=31607463&ctx=documentation)
+- `GET api/projects` - [get all projects details](https://www.postman.com/descent-module-candidate-79416993/workspace/task-management-system/request/31607463-7ea9c108-3621-4d49-b34e-9dcf7ededa02?action=share&creator=31607463&ctx=documentation)
+- `GET api/projects/{id}` - [get project details by project ID](https://www.postman.com/descent-module-candidate-79416993/workspace/task-management-system/request/31607463-6b8195be-b4a8-49ed-8782-43576d6f6d0b?action=share&creator=31607463&ctx=documentation)
+- `PUT api/projects/{id}` - [update project](https://www.postman.com/descent-module-candidate-79416993/workspace/task-management-system/request/31607463-a2fa5b18-cb47-4140-8b47-64303af5c3b3?action=share&creator=31607463&ctx=documentation)
+- `PATCH api/projects/{id}` - [update project status](https://www.postman.com/descent-module-candidate-79416993/workspace/task-management-system/request/31607463-7708d9dd-a14f-4bf0-9010-1965803a5fa6?action=share&creator=31607463&ctx=documentation)
 
-1. Create a new Spring Boot project
-2. Create a new GitHub repo with `task-management-app` name (or any other you like)
-    - if you work in a team the repo MUST belong to the organization;
-    - configure `Branch protection rules` for the organization repository using the following tutorial:
+### 4. **Task Controller**:
+- `POST api/tasks` - create a new task for a project
+- `GET api/tasks`- get all tasks details by project ID
+- `GET api/tasks{id}` - get task details by task ID
+- `PUT api/tasks/{id}` - update task details by task ID
+- `DELETE api/tasks/{id}` - delete task by ID
 
-      <details>
-        <summary>Tutorial for branch protection rules</summary>
+### 5. **Label Controller**
+- `POST api/labels` - [create new label]
+- `GET api/labels/by_project/{projectId}` - [get all labels within the project]
+- `PUT api/labels/{id}` - update label
+- `DELETE api/labels/{id}` - delete label by id
 
-      Go to the repository settings
-      STEP #1
-      ![Add your teammate](./description/first-step-for-branch-protection-rules.png)
+### 6. **Comment Controller**:
+- `POST api/comments/{taskId}` - add a new comment to a task by task ID
+- `GET api/comments/{taskId}` - retrieve comments within a task
+- `PUT api/comments/{id}` - update a comment
+- `DELETE api/comments/{id} - delete a comment by ID
 
-      STEP #2
-      ![Add your teammate](./description/second-step-for-branch-protection-rules.png)
+### 7. **Attachment Controller**:
+- `POST api/attachments`
+- `GET api/attachments/{id}` - get attachment details by ID
+- `DELETE api/attachments/{id}` - delete attachment by id
+- `DELETE api/attachments/all/{taskId}` - delete all attachments related to the task
 
-      Add the rule with only the next settings
-      STEP #3
-      ![Add your teammate](./description/third-step-for-branch-protection-rules.png)
+## Installation
 
-      More information about all other settings at
-      the [link](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/defining-the-mergeability-of-pull-requests/managing-a-branch-protection-rule)
-      </details>
+## ⌛ History of project creation ⌛
 
-3. Connect a repo to a folder with your Spring Boot project (see the instructions on GitHub);
-4. Setup checkstyle plugin in your project
-5. Setup CI process to run the `mvn clean verify` command by adding a `.github/workflows/ci.yml` file
-6. The `master` (or `main`) branch is a base for your feature PullRequests.
-7. PRs should be merged thereafter review
+Creating this project, as it was a team effort, the biggest challenge was synchronizing the team as a cohesive entity. However, this hurdle was successfully overcome thanks to the initiative and resourcefulness of all team members. From a technological standpoint, the most challenging, yet intriguing, aspects were integrating notifications via the Telegram messenger and utilizing the Dropboxdrb box service for storing attachments. Nevertheless, this milestone was also successfully conquered.💪
 
-## How to develop a feature
+## 📈 Possible improvements 📈
 
-1. `Pull` the latest `master`.
-2. Create a `your-feature-name` branch and `push` it to GitHub.
-3. Open a Pull Request (`PR`) from your branch to the `master` (`main`).
-4. Discuss branches and commit naming practices. Your branch, PR, and commit names should be consistent across the
-   team. Example of PR names:
-    - [DB]: prefix for liquibase scripts
-    - [API] for scripts with API changes
-5. Do not use forks, work in a single repo altogether!
-6. Write your code, save it, and push it to GitHub.
-7. Ask your teammate to review and approve if everything is OK.
-8. If some fixes are required discuss the comments and repeat steps 5-7.
-9. Mentors will review your codebase every day, but not PRs.
-
-## Coding
-
-- Add checkstyle plugin.
-- Separate PR to the `main` branch for each task is required.
-- 60%+ of the custom code should be covered with tests.
-- Make sure to name your commits & branches meaningfully.
-- Do not use forks, work in a single repo altogether (if you work in a team).
-
-## App
-
-### Requirements:
-
-- Functional (what the system should do):
-    - Web-based
-    - User registration and authentication
-    - Project management (CRUD operations)
-    - Task management within projects
-    - Assign and notify users about tasks
-    - Add comments and attachments to tasks
-    - Organize tasks with labels
-    - Store attachments on Dropbox using its API
-- Non-functional (what the system should deal with):
-    - Scalable to handle a large number of users
-    - Efficient retrieval of tasks, comments, and attachments
-    - Secure storage of sensitive user data
-
-### Models
-
-1. **User**:
-    - Username: String
-    - Password: String
-    - Email: String
-    - First Name: String
-    - Last Name: String
-
-2. **Project**:
-    - Name: String
-    - Description: String
-    - Start Date: LocalDate
-    - End Date: LocalDate
-    - Status: Enum: [INITIATED, IN_PROGRESS, COMPLETED]
-
-3. **Task**:
-    - Name: String
-    - Description: String
-    - Priority: Enum: [LOW, MEDIUM, HIGH]
-    - Status: Enum: [NOT_STARTED, IN_PROGRESS, COMPLETED]
-    - Due Date: LocalDate
-    - Project ID: Long
-    - Assignee ID: Long
-
-4. **Comment**:
-    - Task ID: Long
-    - User ID: Long
-    - Text: String
-    - Timestamp: LocalDateTime
-
-5. **Attachment**:
-    - Task ID: Long
-    - Dropbox File ID: String   // Store the reference to Dropbox
-    - Filename: String
-    - Upload Date: LocalDateTime
-
-6. **Label**:
-    - Name: String
-    - Color: String
-
-### Controllers
-
-1. **Auth Controller**:
-    - POST: /api/auth/register - User registration
-    - POST: /api/auth/login - User authentication
-
-2. Users Controller: Managing authentication and user registration
-    - PUT: /users/{id}/role - update user role
-    - GET: /users/me - get my profile info
-    - PUT/PATCH: /users/me - update profile info
-
-3. **Project Controller**:
-    - POST: /api/projects - Create a new project
-    - GET: /api/projects - Retrieve user's projects
-    - GET: /api/projects/{id} - Retrieve project details
-    - PUT: /api/projects/{id} - Update project
-    - DELETE: /api/projects/{id} - Delete project
-
-4. **Task Controller**:
-    - POST: /api/tasks - Create a new task
-    - GET: /api/tasks - Retrieve tasks for a project
-    - GET: /api/tasks/{id} - Retrieve task details
-    - PUT: /api/tasks/{id} - Update task
-    - DELETE: /api/tasks/{id} - Delete task
-
-5. **Comment Controller**:
-    - POST: /api/comments - Add a comment to a task
-    - GET: /api/comments?taskId={taskId} - Retrieve comments for a task
-
-6. **Attachment Controller**:  // This is where we will interact with Dropbox API
-    - POST: /api/attachments - Upload an attachment to a task (File gets uploaded to Dropbox and we store the Dropbox File ID in our database)
-    - GET: /api/attachments?taskId={taskId} - Retrieve attachments for a task (Get the Dropbox File ID from the database and retrieve the actual file from Dropbox)
-
-7. **Label Controller**:
-    - POST: /api/labels - Create a new label
-    - GET: /api/labels - Retrieve labels
-    - PUT: /api/labels/{id} - Update label
-    - DELETE: /api/labels/{id} - Delete label
-
-### Dropbox Integration:
-
-To store the attachments of tasks, we will use the Dropbox API. The general flow is:
-
-1. When a user uploads an attachment, our backend will upload this file to Dropbox.
-2. Dropbox returns a unique File ID after a successful upload.
-3. We store this Dropbox File ID in our database against the attachment details.
-4. When someone wants to retrieve/download the attachment, we use this File ID to fetch the file from Dropbox and serve it to the user.
-
-This approach allows us to leverage Dropbox's robust file storage system, keeping our system lightweight and focused on task management.
-
-Read more about [Dropbox API](./dropbox.md)
-
-## Tasks
-
-### Infrastructure
-
-- Set up a task management board on a platform like Trello or Jira to keep track of progress.
-- Initialize a new repository on GitHub or another platform for source code version control.
-- Set up a CI/CD process to automate testing and deployment.
-- Integrate a database migration tool, e.g., Liquibase or Flyway, to handle database schema changes.
-- Add a health check endpoint to ensure the application is running and connected to the database.
-- Containerize the application using Docker to ensure a consistent runtime environment.
-- Store sensitive information such as API keys in a `.env` file, and add a `.env.sample` with placeholders to the repository.
-- Implement API documentation using tools like Swagger to provide an interactive interface for testing and understanding the API.
-- Update the `README.md` with setup instructions, API endpoints, and other relevant information once the project is complete.
-
-### User Management
-
-- Implement user registration and authentication mechanisms.
-- Add user roles and permissions (e.g., ADMIN, USER) to control access to certain functionalities.
-- Secure API endpoints using JWT tokens or other security mechanisms.
-
-### Project Management
-
-- Set up database tables and JPA entities for projects.
-- Implement CRUD operations for projects.
-- Ensure only authorized users can access, modify, or delete projects.
-
-### Task Management
-
-- Create tables and entities for tasks.
-- Implement CRUD operations for tasks.
-- Allow tasks to be assigned to users and notify assignees of new tasks.
-
-### Comments
-
-- Set up tables and entities for comments.
-- Allow users to add, view, and delete comments related to tasks.
-
-### Attachments
-
-- Design the attachment entity to store metadata about files (filename, upload date, etc.), but the actual files will be stored on Dropbox.
-- Integrate with the Dropbox API to upload, retrieve, and delete files.
-    - When a new attachment is uploaded, save it to Dropbox and store the returned metadata in the application database.
-    - For retrieval, fetch the metadata from the database and use the Dropbox API to fetch the actual file.
-    - Deleting an attachment should remove the metadata from the database and also delete the file from Dropbox.
-- Ensure only authorized users can upload, view, or delete attachments.
-
-### Labels
-
-- Implement database tables and entities for labels.
-- Allow users to create, modify, and delete labels.
-- Allow labels to be assigned to tasks for better organization.
-
-### Notifications
-- Integrate a notification system, like email or Telegram, to notify users about task deadlines, comments, and other updates.
-
-### Optional:
-- Deploy your app to the AWS
-
-### Advanced
-- Implement a search and filter mechanism for tasks and projects.
-- Integrate with third-party applications, like Google Calendar, to provide additional functionalities.
+Overall, we are confident that this project covers all necessary functionality and is sufficiently convenient for integration. However, as always, there is room for growth. First and foremost, shortly, our plans include achieving maximum code coverage with tests, adding the ability to search for projects/tasks by partial name or other fields, as well as expanding the functionality of notifications via Telegram
+<div style="width:100%; text-align:center;">
+    <img src="images/readme_footer_image.gif" alt="Footer Image">
+</div>
