@@ -1,6 +1,6 @@
 package app.dto.task;
 
-import app.model.Priority;
+import app.model.Task.Priority;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
