@@ -2,7 +2,7 @@ package app.dto.task;
 
 import app.dto.comment.CommentResponseDto;
 import app.dto.label.LabelResponseDto;
-import app.model.Priority;
+import app.model.Task.Priority;
 import app.model.TaskStatus;
 import java.time.LocalDate;
 import java.util.List;
