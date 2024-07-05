@@ -64,4 +64,10 @@ public class Task {
 
     @OneToMany(mappedBy = "task")
     private Set<Comment> comments;
+
+    public enum Priority {
+        LOW,
+        MEDIUM,
+        HIGH
+    }
 }
