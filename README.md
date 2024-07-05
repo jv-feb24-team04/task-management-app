@@ -70,14 +70,22 @@ Creating this project, as it was a team effort, the biggest challenge was synchr
 However, this hurdle was successfully overcome thanks to the initiative and resourcefulness of all team members.   
 From a technological standpoint, the most challenging, yet intriguing, aspects were integrating notifications via   
 the Telegram messenger and utilizing the Dropboxdrb box service for storing attachments.   
-Nevertheless, this milestone was also successfully conquered.💪  
+Nevertheless, this milestone was also successfully conquered.💪
 
 ## 📈 Possible improvements 📈
 
 Overall, we are confident that this project covers all necessary functionality and is sufficiently   
 convenient for integration. However, as always, there is room for growth. First and foremost, shortly, our plans include  
 achieving maximum code coverage with tests, adding the ability to search for projects/tasks by partial name or   
-other fields, as well as expanding the functionality of notifications via Telegram  
+other fields, as well as expanding the functionality of notifications via Telegram
+
+## 💪 TEAM 💪
+[Yevhenii Vlasenko](https://www.linkedin.com/in/yevhenii-vlasenko-776064218/)  
+[Valentyn Sharshon](https://www.linkedin.com/in/valentyn-sharshon-6b9339259/)  
+[Kateryna Makarchuk](https://www.linkedin.com/in/kateryna-makarchuk-a89bab217/)  
+[Bohdan Bohush](https://github.com/bodya4243)  
+[Bohdan Markatov](https://github.com/Bohadan-Markatov)  
+[Eduard Fakhrutdinov](https://github.com/EduarfF)
 <div style="width:100%; text-align:center;">
     <img src="images/readme_footer_image.gif" alt="Footer Image">
 </div>
